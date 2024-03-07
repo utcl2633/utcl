@@ -1,0 +1,33 @@
+<form>
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <div fxFlex="100%">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Full Name</mat-label>
+          <input matInput formControlName="name" name="name" required pattern="/\s/">
+        </mat-form-field>
+      </div>
+      <div fxFlex="100%">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" name="email" required type="email">
+        </mat-form-field>
+      </div>
+      <div fxFlex="100%">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" name="password" type="password" required pattern="^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{8,}$">
+          <mat-error *ngIf="registerForm.value.password">Password must be a combination of lower-case, upper-case, numbers and at least 9 characters long</mat-error>
+        </mat-form-field>
+      </div>
+      <div fxFlex="100%">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput formControlName="confirmPassword" name="confirmPassword" type="password" required pattern="{{registerForm.value.password}}">
+          <mat-error *ngIf="registerForm.value.verifyPassword">Passwords do not match.</mat-error>
+        </mat-form-field>
+      </div>
+      <div fxFlex="100%">
+          <button mat-stroked-button color="primary" type="submit" [disabled]="!registerForm.valid">Register<mat-icon>chevron_right</mat-icon></button>
+      </div>
+    </div>
+</form>
