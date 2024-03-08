@@ -1,1 +1,117 @@
-<p>user-registration works!</p>
+<div class="card m-3 w-50 reg">
+  <div class="card-header text-bg-primary text-center">
+    Registration Form
+  </div>
+  <div class="card-body">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit(registerForm)">
+      <div class="form-group">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Company</mat-label>
+          <mat-select formControlName="company" multiple [ngClass]="{ 'is-invalid': submitted && f['company'].errors }">
+            <mat-select-trigger>
+              {{f['company'].value?.[0] || ''}} @if ((f['company'].value?.length
+              || 0) > 1) {
+              <span class="example-additional-selection">
+                (+{{(f['company'].value?.length || 0) - 1}}
+                {{f['company'].value?.length === 2 ? 'other' : 'others'}})
+              </span>
+              }
+            </mat-select-trigger>
+            @for (item of companyList; track item) {
+            <mat-option [value]="item">{{item}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Toppings</mat-label>
+          <mat-select formControlName="region" multiple [ngClass]="{ 'is-invalid': submitted && f['region'].errors }">
+            <mat-select-trigger>
+              {{f['region'].value?.[0] || ''}} @if ((f['region'].value?.length
+              || 0) > 1) {
+              <span class="example-additional-selection">
+                (+{{(f['region'].value?.length || 0) - 1}}
+                {{f['region'].value?.length === 2 ? 'other' : 'others'}})
+              </span>
+              }
+            </mat-select-trigger>
+            @for (item of companyList; track item) {
+            <mat-option [value]="item">{{item}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Role</mat-label>
+          <mat-select formControlName="role" [ngClass]="{ 'is-invalid': submitted && f['role'].errors }">
+            @for (item of companyList; track item) {
+            <mat-option [value]="item">{{item}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Email ID</mat-label>
+          <input
+            type="email"
+            matInput
+            formControlName="email"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
+            placeholder="Enter your email"
+          />
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>First Name</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="firstName"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }"
+            placeholder="Enter your First Name"
+          />
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Last Name</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="lastName"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['lastName'].errors }"
+            placeholder="Enter your Last Name"
+          />
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Phone Number</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="phNumber"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['phNumber'].errors }"
+            placeholder="Enter your Phone Number"
+          />
+        </mat-form-field>
+      </div>
+      <div class="text-center mt-2">
+        <button class="btn btn-secondary" type="reset" (click)="onReset()">
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-primary marl-2">
+          Register
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

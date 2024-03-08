@@ -12,6 +12,6 @@ export const appConfig: ApplicationConfig = {
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule, provideAnimationsAsync()
   ]
 };
