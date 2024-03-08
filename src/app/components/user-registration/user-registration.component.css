@@ -10,3 +10,9 @@
   position: absolute;
   left: 30%;
 }
+
+.invalid-feedback {
+  color: red;
+  font-size: 12px;
+  display: block;
+}

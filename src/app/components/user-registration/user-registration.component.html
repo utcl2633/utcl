@@ -4,29 +4,32 @@
   </div>
   <div class="card-body">
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit(registerForm)">
-      <div class="form-group">
+      <div class="form-group mb-2">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Company</mat-label>
-          <mat-select formControlName="company" multiple [ngClass]="{ 'is-invalid': submitted && f['company'].errors }">
-            <mat-select-trigger>
-              {{f['company'].value?.[0] || ''}} @if ((f['company'].value?.length
-              || 0) > 1) {
-              <span class="example-additional-selection">
-                (+{{(f['company'].value?.length || 0) - 1}}
-                {{f['company'].value?.length === 2 ? 'other' : 'others'}})
-              </span>
-              }
-            </mat-select-trigger>
-            @for (item of companyList; track item) {
-            <mat-option [value]="item">{{item}}</mat-option>
+          <mat-select
+            formControlName="company"
+            [ngClass]="{ 'is-invalid': submitted && f['company'].errors }"
+          >
+            @for (item of companyMasterMock; track item.id) {
+            <mat-option [value]="item.name">{{item.name}}</mat-option>
             }
           </mat-select>
+          @if(f['company'].errors?.['required'] && f['company'].touched){
+          <mat-error>
+            Please select a Company.
+          </mat-error>
+          }
         </mat-form-field>
       </div>
-      <div class="form-group">
+      <div class="form-group mb-2">
         <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Toppings</mat-label>
-          <mat-select formControlName="region" multiple [ngClass]="{ 'is-invalid': submitted && f['region'].errors }">
+          <mat-label>Region</mat-label>
+          <mat-select
+            formControlName="region"
+            multiple
+            [ngClass]="{ 'is-invalid': submitted && f['region'].errors }"
+          >
             <mat-select-trigger>
               {{f['region'].value?.[0] || ''}} @if ((f['region'].value?.length
               || 0) > 1) {
@@ -36,23 +39,50 @@
               </span>
               }
             </mat-select-trigger>
-            @for (item of companyList; track item) {
-            <mat-option [value]="item">{{item}}</mat-option>
+            @for (item of regionMock; track item.id) {
+            <mat-option [value]="item.regionName"
+              >{{item.regionName}}</mat-option
+            >
             }
           </mat-select>
+          @if(f['region'].errors?.['required'] && f['region'].touched){
+          <mat-error>
+            Please select at-least one Region.
+          </mat-error>
+          }
         </mat-form-field>
       </div>
-      <div class="form-group">
+      <div class="form-group mb-2">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Role</mat-label>
-          <mat-select formControlName="role" [ngClass]="{ 'is-invalid': submitted && f['role'].errors }">
-            @for (item of companyList; track item) {
-            <mat-option [value]="item">{{item}}</mat-option>
+          <mat-select
+            formControlName="role"
+            multiple
+            [ngClass]="{ 'is-invalid': submitted && f['role'].errors }"
+          >
+            <mat-select-trigger>
+              {{f['role'].value?.[0] || ''}} @if ((f['role'].value?.length || 0)
+              > 1) {
+              <span class="example-additional-selection">
+                (+{{(f['role'].value?.length || 0) - 1}}
+                {{f['role'].value?.length === 2 ? 'other' : 'others'}})
+              </span>
+              }
+            </mat-select-trigger>
+            @for (item of roleType; track item.id) {
+            <mat-option [value]="item.rollTypeName"
+              >{{item.rollTypeName}}</mat-option
+            >
             }
           </mat-select>
+          @if(f['role'].errors?.['required'] && f['role'].touched){
+          <mat-error>
+            Please select at-least one Role.
+          </mat-error>
+          }
         </mat-form-field>
       </div>
-      <div class="form-group">
+      <div class="form-group mb-2">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Email ID</mat-label>
           <input
@@ -63,9 +93,14 @@
             [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
             placeholder="Enter your email"
           />
+          @if(f['email'].errors?.['required'] && f['email'].touched){
+          <mat-error>
+            Please Enter Email ID.
+          </mat-error>
+          }
         </mat-form-field>
       </div>
-      <div class="form-group">
+      <div class="form-group mb-2">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>First Name</mat-label>
           <input
@@ -76,9 +111,14 @@
             [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }"
             placeholder="Enter your First Name"
           />
+          @if(f['firstName'].errors?.['required'] && f['firstName'].touched){
+          <mat-error>
+            Please Enter First Name.
+          </mat-error>
+          }
         </mat-form-field>
       </div>
-      <div class="form-group">
+      <div class="form-group mb-2">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Last Name</mat-label>
           <input
@@ -89,9 +129,14 @@
             [ngClass]="{ 'is-invalid': submitted && f['lastName'].errors }"
             placeholder="Enter your Last Name"
           />
+          @if(f['lastName'].errors?.['required'] && f['lastName'].touched){
+          <mat-error>
+            Please Enter Last Name.
+          </mat-error>
+          }
         </mat-form-field>
       </div>
-      <div class="form-group">
+      <div class="form-group mb-2">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Phone Number</mat-label>
           <input
@@ -102,9 +147,32 @@
             [ngClass]="{ 'is-invalid': submitted && f['phNumber'].errors }"
             placeholder="Enter your Phone Number"
           />
+          @if(f['phNumber'].errors?.['required'] && f['phNumber'].touched){
+          <mat-error>
+            Please Enter Phone Number.
+          </mat-error>
+          }
         </mat-form-field>
       </div>
-      <div class="text-center mt-2">
+      <div class="form-group mb-2">
+        <label>Upload Agreement</label>
+        <input
+          type="file"
+          formControlName="file"
+          class="form-control"
+          (change)="handleFileInput($event.target)"
+        />
+        @if(f['file'].errors?.['extensionFile'] && f['file'].touched){
+        <div class="invalid-feedback">
+          File doesn't have a valid format.
+        </div>
+        } @else if(f['file'].errors?.['invalidSize'] && f['file'].touched){
+        <div class="invalid-feedback">
+          File size should not exceed 2 mb.
+        </div>
+        }
+      </div>
+      <div class="text-center mt-4">
         <button class="btn btn-secondary" type="reset" (click)="onReset()">
           Cancel
         </button>
