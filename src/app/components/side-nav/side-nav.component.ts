@@ -23,8 +23,4 @@ import { MatListModule } from '@angular/material/list';
 export class SideNavComponent {
 
   constructor(public sideNavService: SideNavService) { }
- 
-  ngOnInit() {
-  }
-
 }

@@ -13,6 +13,10 @@
   line-height: 1.5;
 }
 
+#sidebar {
+  z-index: 1;
+}
+
 #sidebar.hidden {
   margin-left: -200px;
 }
@@ -79,4 +83,9 @@ hr {
 
 .mt-250 {
   margin-bottom: 250px;
+}
+
+.sticky-left {
+  position: fixed !important;
+  left: 0 !important;
 }

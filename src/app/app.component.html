@@ -1,7 +1,7 @@
 <app-dashboard></app-dashboard>
-<div class="wrapper d-flex">
+<div class="wrapper">
   <app-side-nav></app-side-nav>
-  <div class="w-100">
+  <div [ngClass]="{' main-div': !sideNavService.hideSideNav, 'mt-57': sideNavService.hideSideNav }">
     <router-outlet></router-outlet>
   </div>
 </div>
