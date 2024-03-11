@@ -1,1 +1,78 @@
-<p>company-master works!</p>
+<div class="content" style="width: 95%; height: 98%; margin: 25px;">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-6 header-title">
+          Company Master Table
+        </div>
+        <div class="col-6">
+          <button class="btn btn-primary add-btn" (click)="addEditCompanyMaster('', true)">Add Company Master</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <mat-table
+        #table
+        [dataSource]="dataSource"
+        matSort
+        (matSortChange)="announceSortChange($event)"
+      >
+        <ng-container matColumnDef="companyName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Company Name
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.companyName}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="domain">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Domain
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.domain}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="address">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Address
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.address}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="phone">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Phone Number
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.phone}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef>
+            Action
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button
+              mat-icon-button
+              matTooltip="Click to Edit"
+              class="iconbutton"
+              color="primary"
+              (click)="addEditCompanyMaster(element, false)"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              matTooltip="Click to Delete"
+              class="iconbutton"
+              color="warn"
+            >
+              <mat-icon (click)="deleteCompanyMaster(element.id)">delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayColumns;"></mat-row>
+      </mat-table>
+      <mat-paginator
+        [pageSize]="25"
+        [pageSizeOptions]="[25, 50, 100]"
+        showFirstLastButtons
+      ></mat-paginator>
+    </div>
+  </div>
+</div>

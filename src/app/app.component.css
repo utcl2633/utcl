@@ -1,0 +1,27 @@
+.mt-60 {
+  margin-top: 60px;
+}
+
+.main-div {
+  margin-left: 200px;
+  margin-top: 57px;
+}
+
+.mt-57 {
+  transition: all 0.3s;
+  margin-top: 57px;
+}
+
+@media (max-width: 575px) {
+  .main-div {
+    margin-top: 57px;
+    margin-left: 200px !important;
+    z-index: 0;
+  }
+
+  .mt-57 {
+    transition: all 0.3s;
+    margin-left: 200px;
+    margin-top: 57px;
+  }
+}
