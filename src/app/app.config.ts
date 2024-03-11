@@ -6,12 +6,15 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { CommonModule } from '@angular/common';
 import { FormsModule,ReactiveFormsModule} from '@angular/forms'
+import { provideHttpClient, withFetch } from '@angular/common/http';
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideClientHydration(), provideAnimationsAsync(),
     BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    CommonModule, provideAnimationsAsync()
+    CommonModule, 
+    provideAnimationsAsync(),
+    provideHttpClient(withFetch())
   ]
 };

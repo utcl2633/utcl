@@ -1,7 +1,14 @@
-<div class="content" style="width: 95%; height: 100%; margin: 25px;">
+<div class="content" style="width: 95%; height: 98%; margin: 25px;">
   <div class="card">
     <div class="card-header">
-      <b>Company Master Table</b>
+      <div class="row">
+        <div class="col-6 header-title">
+          Company Master Table
+        </div>
+        <div class="col-6">
+          <button class="btn btn-primary add-btn" (click)="addEditCompanyMaster('', true)">Add Company master</button>
+        </div>
+      </div>
     </div>
     <div class="card-body">
       <mat-table
@@ -10,35 +17,29 @@
         matSort
         (matSortChange)="announceSortChange($event)"
       >
-        <ng-container matColumnDef="name">
+        <ng-container matColumnDef="companyName">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
-            Name
+            Company Name
           </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.companyName}} </mat-cell>
         </ng-container>
-        <ng-container matColumnDef="address1">
+        <ng-container matColumnDef="domain">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Domain
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.domain}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="address">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
             Address
           </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.address1}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.address}} </mat-cell>
         </ng-container>
-        <ng-container matColumnDef="city">
+        <ng-container matColumnDef="phone">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
-            City
+            Phone Number
           </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.city}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="state">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>
-            State
-          </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.state}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="zipcode">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>
-            Zipcode
-          </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.zipcode}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.phone}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="action">
           <mat-header-cell *matHeaderCellDef>
@@ -50,6 +51,7 @@
               matTooltip="Click to Edit"
               class="iconbutton"
               color="primary"
+              (click)="addEditCompanyMaster(element, false)"
             >
               <mat-icon>edit</mat-icon>
             </button>
@@ -59,7 +61,7 @@
               class="iconbutton"
               color="warn"
             >
-              <mat-icon>delete</mat-icon>
+              <mat-icon (click)="deleteCompanyMaster(element.id)">delete</mat-icon>
             </button>
           </mat-cell>
         </ng-container>

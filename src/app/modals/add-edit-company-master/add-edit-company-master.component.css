@@ -1,0 +1,9 @@
+.marl-2 {
+  margin-left: 8px;
+}
+
+.invalid-feedback {
+  color: red;
+  font-size: 12px;
+  display: block;
+}
