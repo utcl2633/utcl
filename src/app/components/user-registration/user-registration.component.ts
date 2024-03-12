@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {
   FormBuilder,
   FormGroup,
@@ -12,6 +12,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: "app-user-registration",
@@ -123,6 +124,10 @@ export class UserRegistrationComponent {
       rollName: "Test2",
     },
   ];
+  fileUrl: any;
+  urlSafe: any;
+  sanitizer = inject(DomSanitizer);
+  isOpenPrev = false;
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -156,6 +161,7 @@ export class UserRegistrationComponent {
 
   onReset() {
     this.submitted = false;
+    this.isOpenPrev = false;
     this.registerForm.reset();
   }
 
@@ -168,6 +174,22 @@ export class UserRegistrationComponent {
       this.registerForm.controls["file"].setErrors({ invalidSize: true });
     } else if (!this.allowedFileExtensions.includes(ext.toLowerCase())) {
       this.registerForm.controls["file"].setErrors({ extensionFile: true });
+    }
+
+    // file upload & priview
+    if (this.registerForm.controls["file"].valid) {
+      this.isOpenPrev = true;
+      let fileToUpload = target.files.item(0);
+      let reader = new FileReader();
+      reader.onload = (event: any) => {
+        this.fileUrl = event.target.result;
+        this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(
+          this.fileUrl
+        );
+      };
+      reader.readAsDataURL(fileToUpload);
+    } else {
+      this.isOpenPrev = false;
     }
   }
 }

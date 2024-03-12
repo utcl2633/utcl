@@ -16,13 +16,20 @@
           type="text"
           matInput
           formControlName="companyName"
+          minlength="2"
+          maxlength="50"
           class="form-control"
           [ngClass]="{ 'is-invalid': submitted && f['companyName'].errors }"
           placeholder="Enter your company name"
         />
         @if(f['companyName'].errors?.['required'] && f['companyName'].touched){
         <mat-error>
-          Please Enter Company Name.
+          Please enter Company Name.
+        </mat-error>
+        } @if((f['companyName'].errors?.['minlength'] ||
+        f['companyName'].errors?.['maxlength']) && f['companyName'].touched){
+        <mat-error>
+          Company Name length should be min 2 and max 50 character.
         </mat-error>
         }
       </mat-form-field>
@@ -36,11 +43,15 @@
           formControlName="domain"
           class="form-control"
           [ngClass]="{ 'is-invalid': submitted && f['domain'].errors }"
-          placeholder="Enter your Domain"
+          placeholder="Enter your Domain starts with @"
         />
         @if(f['domain'].errors?.['required'] && f['domain'].touched){
         <mat-error>
-          Please Enter Domain.
+          Please enter Domain.
+        </mat-error>
+        } @if(f['domain'].errors?.['pattern'] && f['domain'].touched){
+        <mat-error>
+          Please enter a valid Domain
         </mat-error>
         }
       </mat-form-field>
@@ -52,13 +63,20 @@
           type="text"
           matInput
           formControlName="address"
+          minlength="2"
+          maxlength="50"
           class="form-control"
           [ngClass]="{ 'is-invalid': submitted && f['address'].errors }"
           placeholder="Enter your Address"
         />
         @if(f['address'].errors?.['required'] && f['address'].touched){
         <mat-error>
-          Please Enter Address.
+          Please enter Address.
+        </mat-error>
+        } @if((f['address'].errors?.['minlength'] ||
+        f['address'].errors?.['maxlength']) && f['address'].touched){
+        <mat-error>
+          Address length should be min 2 and max 50 character.
         </mat-error>
         }
       </mat-form-field>
@@ -70,13 +88,20 @@
           type="text"
           matInput
           formControlName="phNumber"
+          maxlength="10"
+          minlength="10"
+          onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 43"
           class="form-control"
           [ngClass]="{ 'is-invalid': submitted && f['phNumber'].errors }"
           placeholder="Enter your Phone Number"
         />
         @if(f['phNumber'].errors?.['required'] && f['phNumber'].touched){
         <mat-error>
-          Please Enter Phone Number.
+          Please enter Phone Number.
+        </mat-error>
+        } @if(f['phNumber'].errors?.['minlength'] && f['phNumber'].touched){
+        <mat-error>
+          Phone Number should be 10 character.
         </mat-error>
         }
       </mat-form-field>
