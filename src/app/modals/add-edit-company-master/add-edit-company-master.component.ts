@@ -42,16 +42,19 @@ export class AddEditCompanyMasterComponent {
   ngOnInit() {
     this.addEditForm = this.formBuilder.group({
       companyName: ["", Validators.required],
-      domain: ["", Validators.required],
+      domain: [
+        "",
+        [Validators.required, Validators.pattern("^[@](\/?[A-Za-z])*\/?$")],
+      ],
       address: ["", Validators.required],
       phNumber: ["", Validators.required],
     });
 
-    if(this.data.element) {
-      this.f['companyName'].setValue(this.data?.element?.companyName);
-      this.f['domain'].setValue(this.data?.element?.domain);
-      this.f['address'].setValue(this.data?.element?.address);
-      this.f['phNumber'].setValue(this.data?.element?.phone);
+    if (this.data.element) {
+      this.f["companyName"].setValue(this.data?.element?.companyName);
+      this.f["domain"].setValue(this.data?.element?.domain);
+      this.f["address"].setValue(this.data?.element?.address);
+      this.f["phNumber"].setValue(this.data?.element?.phone);
     }
   }
 
@@ -65,28 +68,32 @@ export class AddEditCompanyMasterComponent {
   }
 
   onSubmit(form: FormGroup<any>) {
-    console.log('formValue', form.value);
-    if(this.data.isAdd) {
-      delete form.value.id;
-      this.apiService.addCompanyMaster(form.value).subscribe({
-        next: (res: any) => {
-          console.log("success", res);
-          this.activeModal.close('Success');
-        },
-        error: (err: any) => {
-          console.log("error: Something went wrong!");
-        }
-      })
-    } else {
-      this.apiService.updateCompanyMaster(this.data.element.id, form.value).subscribe({
-        next: (res: any) => {
-          console.log("success", res);
-          this.activeModal.close('Success');
-        },
-        error: (err: any) => {
-          console.log("error: Something went wrong!");
-        }
-      })
+    console.log("formValue", form.value);
+    if (form.valid) {
+      if (this.data.isAdd) {
+        delete form.value.id;
+        this.apiService.addCompanyMaster(form.value).subscribe({
+          next: (res: any) => {
+            console.log("success", res);
+            this.activeModal.close("Success");
+          },
+          error: (err: any) => {
+            console.log("error: Something went wrong!");
+          },
+        });
+      } else {
+        this.apiService
+          .updateCompanyMaster(this.data.element.id, form.value)
+          .subscribe({
+            next: (res: any) => {
+              console.log("success", res);
+              this.activeModal.close("Success");
+            },
+            error: (err: any) => {
+              console.log("error: Something went wrong!");
+            },
+          });
+      }
     }
   }
 }
