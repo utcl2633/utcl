@@ -1,6 +1,6 @@
 <nav
   id="sidebar"
-  class="navbar-dark bg-color side-bar mt-250 sticky-left"
+  class="navbar-dark bg-color side-bar sticky-left"
   [ngClass]="{'hidden': sideNavService.hideSideNav }"
 >
   <mat-nav-list>
@@ -35,4 +35,12 @@
       </span>
     </a>
   </mat-nav-list>
+
+  <div class="text-center p-4 position-absolute" style="color: #fff; bottom: 50px;">
+    <hr/>
+    © 2021 Copyright:
+    <a class="text-reset fw-bold" href="http://localhost:4200/company-master"
+      >Birlasoft.com</a
+    >
+  </div>
 </nav>
