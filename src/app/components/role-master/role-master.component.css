@@ -1,0 +1,15 @@
+mat-header-cell,
+mat-cell {
+  justify-content: center;
+}
+
+.add-btn {
+  float: right;
+}
+
+.header-title {
+  font-weight: 500;
+  font-size: 16px;
+  position: relative;
+  top: 10px;
+}
