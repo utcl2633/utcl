@@ -13,6 +13,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { ToastrService } from "ngx-toastr";
 import { ApiService } from "../../services/api.service";
 
 @Component({
@@ -26,7 +27,7 @@ import { ApiService } from "../../services/api.service";
     CommonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule,
+    MatSelectModule
   ],
   templateUrl: "./add-edit-company-master.component.html",
   styleUrl: "./add-edit-company-master.component.css",
@@ -36,10 +37,12 @@ export class AddEditCompanyMasterComponent {
   @Input() data!: any;
   formBuilder = inject(FormBuilder);
   apiService = inject(ApiService);
+  toastr = inject(ToastrService)
   addEditForm!: FormGroup;
   submitted = false;
 
   ngOnInit() {
+    this.toastr.success("Company added successfully.");
     this.addEditForm = this.formBuilder.group({
       companyName: ["", Validators.required],
       domain: [
@@ -49,13 +52,6 @@ export class AddEditCompanyMasterComponent {
       address: ["", Validators.required],
       phNumber: ["", Validators.required],
     });
-
-    // this.apiService.getCompanyMasterDetails(this.data?.element?.id).subscribe({
-    //   next: (response: any) => {
-    //     console.log(response)
-    //   },
-    //   error: (error: any) => {}
-    // })
 
     if (this.data.element) {
       this.f["companyName"].setValue(this.data?.element?.companyName);
@@ -88,9 +84,15 @@ export class AddEditCompanyMasterComponent {
           next: (res: any) => {
             console.log("success", res);
             this.activeModal.close("Success");
+            this.toastr.success('Success:', 'Company added successfully.', {
+              timeOut: 3000
+            });
           },
           error: (err: any) => {
             console.log("error: Something went wrong!");
+            this.toastr.error('Error:', 'Something went wrong! Please try again after sometimes.', {
+              timeOut: 3000
+            });
           },
         });
       } else {
@@ -101,9 +103,11 @@ export class AddEditCompanyMasterComponent {
             next: (res: any) => {
               console.log("success", res);
               this.activeModal.close("Success");
+              this.toastr.success("Company updated successfully.");
             },
             error: (err: any) => {
               console.log("error: Something went wrong!");
+              this.toastr.error("Something went wrong! Please try again after sometimes.");
             },
           });
       }

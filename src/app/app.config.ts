@@ -7,6 +7,7 @@ import { routes } from './app.routes';
 import { CommonModule } from '@angular/common';
 import { FormsModule,ReactiveFormsModule} from '@angular/forms'
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideToastr } from 'ngx-toastr';
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideClientHydration(), provideAnimationsAsync(),
     BrowserAnimationsModule,
@@ -15,6 +16,11 @@ export const appConfig: ApplicationConfig = {
     ReactiveFormsModule,
     CommonModule, 
     provideAnimationsAsync(),
-    provideHttpClient(withFetch())
+    provideHttpClient(withFetch()),
+    provideToastr({
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+    })
   ]
 };
