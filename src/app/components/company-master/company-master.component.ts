@@ -80,7 +80,7 @@ export class CompanyMasterComponent {
 
   deleteCompanyMaster(id: any) {
     this.apiService.deleteCompanyMaster(id).subscribe((res) => {
-
+      
     })
   }
 }
