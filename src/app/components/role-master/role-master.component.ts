@@ -63,6 +63,7 @@ export class RoleMasterComponent {
     getData() {
       this.apiService.getRoleMaster().subscribe({
         next: (res: any) => {
+          console.log("role master get res",res);
           this.dataSource.data = res;
           this.dataSource.paginator = this.paginator;
         },
@@ -71,7 +72,7 @@ export class RoleMasterComponent {
         },
       });
     }
-  
+
     addEditRoleMaster(element?: any, addOrEdit: boolean = true) {
       const modalRef = this.modalService.open(AddEditRoleMasterComponent);
       modalRef.componentInstance.data = {
@@ -83,23 +84,11 @@ export class RoleMasterComponent {
   
     deleteRoleMaster(id: any) {
       this.apiService.deleteRoleMaster(id).subscribe((res) => {
-  
+        console.log("delete role master",res);
       })
     }
 
 
-    // getRoleTypesData() {
-    //   this.apiService.getRoletypes().subscribe({
-    //     next: (res: any) => {
-    //       this.dataSource.data = res;
-    //       console.log(res.data,"restype");
-    //     },
-    //     error: (err: any) => {
-    //       console.log(err);
-    //     },
-    //   });
-    // }
-
-  
+   
 
   }

@@ -1,67 +1,67 @@
 <div class="content" style="width: 95%; height: 98%; margin: 25px;">
-    <div class="card">
-      <div class="card-header">
-        <div class="row">
-          <div class="col-6 header-title">
-            Role Master Table
-          </div>
-          <div class="col-6">
-            <button class="btn btn-primary add-btn" (click)="addEditRoleMaster('', true)">Add Role Master</button>
-          </div>
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-6 header-title">
+          Role Master Table
+        </div>
+        <div class="col-6">
+          <button class="btn btn-primary add-btn" (click)="addEditRoleMaster('', true)">Add Role Master</button>
         </div>
       </div>
-      <div class="card-body">
-        <mat-table
-          #table
-          [dataSource]="dataSource"
-          matSort
-          (matSortChange)="announceSortChange($event)"
-        >
-          <ng-container matColumnDef="roleType">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Role Type 
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.roleType}} </mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="roleName">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>
-                Role Name
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.roleName}} </mat-cell>
-          </ng-container> 
-          <ng-container matColumnDef="action">
-            <mat-header-cell *matHeaderCellDef>
-              Action
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-              <button
-                mat-icon-button
-                matTooltip="Click to Edit"
-                class="iconbutton"
-                color="primary"
-                (click)="addEditRoleMaster(element, false)"
-              >
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button
-                mat-icon-button
-                matTooltip="Click to Delete"
-                class="iconbutton"
-                color="warn"
-              >
-                <mat-icon (click)="deleteRoleMaster(element.id)">delete</mat-icon>
-              </button>
-            </mat-cell>
-          </ng-container>      
-          <mat-header-row *matHeaderRowDef="displayColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayColumns;"></mat-row>
-        </mat-table>
-        <mat-paginator
-          [pageSize]="25"
-          [pageSizeOptions]="[25, 50, 100]"
-          showFirstLastButtons
-        ></mat-paginator>
-      </div>
+    </div>
+    <div class="card-body">
+      <mat-table
+        #table
+        [dataSource]="dataSource"
+        matSort
+        (matSortChange)="announceSortChange($event)"
+      >
+        <ng-container matColumnDef="roleType">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Role Type 
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.roleType?.name}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="roleName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Role Name
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.roleName}} </mat-cell>
+        </ng-container> 
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef>
+            Action
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button
+              mat-icon-button
+              matTooltip="Click to Edit"
+              class="iconbutton"
+              color="primary"
+              (click)="addEditRoleMaster(element, false)"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              matTooltip="Click to Delete"
+              class="iconbutton"
+              color="warn"
+              (click)="deleteRoleMaster(element.id)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>      
+        <mat-header-row *matHeaderRowDef="displayColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayColumns;"></mat-row>
+      </mat-table>
+      <mat-paginator
+        [pageSize]="25"
+        [pageSizeOptions]="[25, 50, 100]"
+        showFirstLastButtons
+      ></mat-paginator>
     </div>
   </div>
-  
+</div>
