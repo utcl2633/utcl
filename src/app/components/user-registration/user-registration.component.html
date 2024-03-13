@@ -13,8 +13,8 @@
                 formControlName="company"
                 [ngClass]="{ 'is-invalid': submitted && f['company'].errors }"
               >
-                @for (item of companyMasterMock; track item.id) {
-                <mat-option [value]="item.name">{{item.name}}</mat-option>
+                @for (item of companyMasterList; track item.id) {
+                <mat-option [value]="item.id">{{item.name}}</mat-option>
                 }
               </mat-select>
               @if(f['company'].errors?.['required'] && f['company'].touched){
@@ -41,7 +41,7 @@
                   </span>
                   }
                 </mat-select-trigger>
-                @for (item of regionMock; track item.id) {
+                @for (item of regionList; track item.id) {
                 <mat-option [value]="item.regionName"
                   >{{item.regionName}}</mat-option
                 >
@@ -71,9 +71,9 @@
                   </span>
                   }
                 </mat-select-trigger>
-                @for (item of roleType; track item.id) {
-                <mat-option [value]="item.rollTypeName"
-                  >{{item.rollTypeName}}</mat-option
+                @for (item of roleMasterList; track item.id) {
+                <mat-option [value]="item.id"
+                  >{{item.name}}</mat-option
                 >
                 }
               </mat-select>
@@ -98,6 +98,29 @@
               @if(f['email'].errors?.['required'] && f['email'].touched){
               <mat-error>
                 Please enter Email ID.
+              </mat-error>
+              }
+              @if(f['email'].errors?.['email'] && f['email'].touched){
+                <mat-error>
+                  Please enter valid Email ID.
+                </mat-error>
+                }
+            </mat-form-field>
+          </div>
+          <div class="form-group mb-2">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Password</mat-label>
+              <input
+                type="password"
+                matInput
+                formControlName="password"
+                class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
+                placeholder="Enter your password"
+              />
+              @if(f['password'].errors?.['required'] && f['password'].touched){
+              <mat-error>
+                Please enter Password.
               </mat-error>
               }
             </mat-form-field>
@@ -181,7 +204,7 @@
               }
             </mat-form-field>
           </div>
-          <div class="form-group mb-2">
+          <!-- <div class="form-group mb-2">
             <label>Upload Agreement</label>
             <input
               type="file"
@@ -198,7 +221,7 @@
               File size should not exceed 2 mb.
             </div>
             }
-          </div>
+          </div> -->
           <div class="text-center mt-4">
             <button class="btn btn-secondary" type="reset" (click)="onReset()">
               Cancel

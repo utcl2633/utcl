@@ -13,6 +13,27 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { DomSanitizer } from "@angular/platform-browser";
+import { catchError, forkJoin, of } from "rxjs";
+import { ApiService } from "../../services/api.service";
+import { ToastrService } from "ngx-toastr";
+
+export interface RoleMaster {
+  id: number;
+  name: string;
+}
+
+export interface Region {
+  id: number;
+  regionName: string;
+}
+
+export interface CompanyMaster {
+  id: number;
+  name: string;
+  address: string;
+  domain: string;
+  phone: string;
+}
 
 @Component({
   selector: "app-user-registration",
@@ -33,14 +54,6 @@ import { DomSanitizer } from "@angular/platform-browser";
 export class UserRegistrationComponent {
   registerForm!: FormGroup;
   submitted = false;
-  companyList: string[] = [
-    "Extra cheese",
-    "Mushroom",
-    "Onion",
-    "Pepperoni",
-    "Sausage",
-    "Tomato",
-  ];
   allowedFileExtensions = [
     "pdf",
     "xls",
@@ -53,81 +66,15 @@ export class UserRegistrationComponent {
   ];
 
   constructor(private formBuilder: FormBuilder) {}
-
-  companyMasterMock = [
-    {
-      id: "1",
-      name: "ABC",
-      domain: "",
-      address: "Hyderabad",
-      phone: "+91 11111111",
-    },
-    {
-      id: "2",
-      name: "XYZ",
-      domain: "",
-      address: "Mumbai",
-      phone: "+91 11111111",
-    },
-  ];
-
-  regionMock = [
-    {
-      id: "1",
-      regionName: "United State of America",
-    },
-    {
-      id: "2",
-      regionName: "INDIA",
-    },
-    {
-      id: "3",
-      regionName: "JAPAN",
-    },
-  ];
-
-  roleType = [
-    {
-      id: "1",
-      rollTypeName: "A",
-      description: "This is role A",
-    },
-    {
-      id: "2",
-      rollTypeName: "B",
-      description: "This is role B",
-    },
-    {
-      id: "3",
-      rollTypeName: "C",
-      description: "This is role C",
-    },
-  ];
-
-  RoleMaster = [
-    {
-      id: "1",
-      rollType: {
-        id: "11",
-        rollTypeName: "A",
-        description: "This is role A",
-      },
-      rollName: "Test1",
-    },
-    {
-      id: "2",
-      rollType: {
-        id: "12",
-        rollTypeName: "B",
-        description: "This is role B",
-      },
-      rollName: "Test2",
-    },
-  ];
+  companyMasterList!: CompanyMaster[];
+  regionList!: Region[];
+  roleMasterList!: RoleMaster[];
   fileUrl: any;
   urlSafe: any;
-  sanitizer = inject(DomSanitizer);
   isOpenPrev = false;
+  sanitizer = inject(DomSanitizer);
+  apiService = inject(ApiService);
+  toastr = inject(ToastrService);
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -135,10 +82,29 @@ export class UserRegistrationComponent {
       region: ["", Validators.required],
       role: ["", Validators.required],
       email: ["", [Validators.required, Validators.email]],
+      password: ["", Validators.required],
       firstName: ["", Validators.required],
       lastName: ["", Validators.required],
       phNumber: ["", Validators.required],
       file: [""],
+    });
+    let requests = [
+      this.apiService
+        .getListOfData("http://localhost:8080/getRegions")
+        .pipe(catchError((err) => of([]))),
+      this.apiService
+        .getListOfData("http://localhost:8080/getAllRoleMasters")
+        .pipe(catchError((err) => of([]))),
+      this.apiService
+        .getListOfData("http://localhost:8080/getAllCompanyMasters")
+        .pipe(catchError((err) => of([]))),
+    ];
+    forkJoin(requests).subscribe((res: any) => {
+      if (res) {
+        this.regionList = res[0];
+        this.roleMasterList = res[1];
+        this.companyMasterList = res[2];
+      }
     });
   }
 
@@ -147,16 +113,32 @@ export class UserRegistrationComponent {
   }
 
   onSubmit(form: any) {
+    console.log(form.value);
     this.registerForm.markAllAsTouched();
     this.submitted = true;
 
     if (this.registerForm.invalid) {
       return;
+    } else {
+      let formData = form.value;
+      let payload = {
+        companyMasterId: formData?.company,
+        regions: formData?.region,
+        roleMasterIds: formData?.role,
+        email: formData?.email,
+        password: formData?.password,
+        firstName: formData?.firstName,
+        lastName: formData?.lastName,
+        phone: formData?.phNumber,
+        agreementId: 0,
+      };
+      this.apiService.userRegistration(payload).subscribe((res) => {
+        this.toastr.success("Success:", "User registered successfully.", {
+          timeOut: 3000,
+        });
+        this.onReset();
+      });
     }
-
-    alert(
-      "SUCCESS!! :-)\n\n" + JSON.stringify(this.registerForm.value, null, 4)
-    );
   }
 
   onReset() {
