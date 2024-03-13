@@ -5,13 +5,14 @@ import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { HeaderComponent } from './components/header/header.component';
 import { SideNavComponent } from "./components/side-nav/side-nav.component";
 import { SideNavService } from './services/side-nav.service';
+import { LoginComponent } from './components/login/login.component';
 
 @Component({
     selector: 'app-root',
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-    imports: [RouterOutlet, HeaderComponent, DashboardComponent, SideNavComponent, CommonModule]
+    imports: [RouterOutlet,LoginComponent ,HeaderComponent, DashboardComponent, SideNavComponent, CommonModule]
 })
 export class AppComponent {
 
