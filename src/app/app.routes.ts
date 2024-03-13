@@ -4,9 +4,11 @@ import { DigitalSignatureComponent } from './components/digital-signature/digita
 import { RoleMasterComponent } from './components/role-master/role-master.component';
 import { RoleTypeComponent } from './components/role-type/role-type.component';
 import { UserRegistrationComponent } from './components/user-registration/user-registration.component';
+import { LoginComponent } from './components/login/login.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'company-master', pathMatch: 'full'},
+    {path: 'login', component:LoginComponent},
     {path: 'company-master', component: CompanyMasterComponent},
     {path: 'role-type', component: RoleTypeComponent},
     {path: 'role-master', component: RoleMasterComponent},
