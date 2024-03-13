@@ -1,64 +1,63 @@
-<div class="modal-header bg-color">
-    <h4 class="modal-title">{{data.header}}</h4>
-    <button
-      type="button"
-      class="btn-close"
-      aria-label="Close"
-      (click)="activeModal.dismiss('Cross click')"
-    ></button>
-  </div>
-  <div class="modal-body">
-    <form [formGroup]="addEditForm" (ngSubmit)="onSubmit(addEditForm)">
-      <div class="form-group mb-2">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Role Type Name</mat-label>
-          <input
-            type="text"
-            matInput
-            formControlName="roleTypeName"
-            class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f['roleTypeName'].errors }"
-            placeholder="Enter your Role Type name"
-          />
-          @if(f['roleTypeName'].errors?.['required'] && f['roleTypeName'].touched){
-          <mat-error>
-            Please Enter Role Type name.
-          </mat-error>
-          }
-        </mat-form-field>
-      </div>
-      <div class="form-group mb-2">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Description</mat-label>
-          <input
-            type="text"
-            matInput
-            formControlName="description"
-            class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f['description'].errors }"
-            placeholder="Enter your Description"
-          />
-         
-        </mat-form-field>
-      </div>
-      
-      <div class="text-center mt-4">
-        <button class="btn btn-secondary" type="reset" (click)="onReset()">
-          Cancel
-        </button>
-        <button type="submit" class="btn btn-primary marl-2">
-          {{data.isAdd? 'Save': 'Update'}}
-        </button>
-      </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-outline-dark"
-      (click)="activeModal.close('Close click')"
-    >
-      Close
-    </button>
-  </div>
-  
+<div class="modal-header">
+  <h4 class="modal-title">{{data.header}}</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  ></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="addEditForm" (ngSubmit)="onSubmit(addEditForm)">
+    <div class="form-group mb-2">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Role Type Name</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="roleTypeName"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f['roleTypeName'].errors }"
+          placeholder="Enter your Role Type name"
+        />
+        @if(f['roleTypeName'].errors?.['required'] && f['roleTypeName'].touched){
+        <mat-error>
+          Please Enter Role Type name.
+        </mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div class="form-group mb-2">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Description</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="description"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f['description'].errors }"
+          placeholder="Enter your Description"
+        />
+       
+      </mat-form-field>
+    </div>
+    
+    <div class="text-center mt-4">
+      <button class="btn btn-secondary" type="reset" (click)="onReset()">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary marl-2">
+        {{data.isAdd? 'Save': 'Update'}}
+      </button>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-outline-dark"
+    (click)="activeModal.close('Close click')"
+  >
+    Close
+  </button>
+</div>

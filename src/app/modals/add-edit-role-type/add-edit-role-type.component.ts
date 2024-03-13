@@ -66,17 +66,26 @@ export class AddEditRoleTypeComponent {
         delete form.value.id;
         this.apiService.addRoleType(form.value).subscribe({
           next: (res: any) => {
-            console.log("success", res);
+            console.log("success", res.message);
             this.activeModal.close('Success');
+            if(res.message==="RoleType added Successfully"){
+              this.apiService.getRoleType();
+            }
           },
           error: (err: any) => {
             console.log("error: Something went wrong!");
           }
         })
       } else {
-        this.apiService.updateRoleType(this.data.element.id, form.value).subscribe({
+        let payload :any =
+          {
+            id: this.data.element.id,
+            roleTypeName: form.controls['roleTypeName'].value,
+            description: form.controls['description'].value
+          }
+        this.apiService.updateRoleType(payload).subscribe({
           next: (res: any) => {
-            console.log("success", res);
+            console.log("success", res.message);
             this.activeModal.close('Success');
           },
           error: (err: any) => {

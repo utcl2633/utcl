@@ -81,7 +81,7 @@ export class AddEditRoleMasterComponent {
           }
         })
       } else {
-        this.apiService.updateRoleType(this.data.element.id, form.value).subscribe({
+        this.apiService.updateRoleMaster(this.data.element.id, form.value).subscribe({
           next: (res: any) => {
             console.log("success", res);
             this.activeModal.close('Success');
