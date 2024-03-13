@@ -61,7 +61,8 @@ export class RoleTypeComponent {
     getData() {
       this.apiService.getRoleType().subscribe({
         next: (res: any) => {
-          this.dataSource.data = res;
+          console.log("res get role type",res);
+           this.dataSource.data = res;
           this.dataSource.paginator = this.paginator;
         },
         error: (err: any) => {
@@ -80,8 +81,9 @@ export class RoleTypeComponent {
     }
   
     deleteRoleType(id: any) {
+      alert();
       this.apiService.deleteRoleType(id).subscribe((res) => {
-  
+        console.log("res delte",res.message);
       })
     }
   }

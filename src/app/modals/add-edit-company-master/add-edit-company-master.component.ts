@@ -44,11 +44,18 @@ export class AddEditCompanyMasterComponent {
       companyName: ["", Validators.required],
       domain: [
         "",
-        [Validators.required, Validators.pattern("^[@](\/?[A-Za-z])*\/?$")],
+        [Validators.required, Validators.pattern("^[@](/?[A-Za-z])*/?$")],
       ],
       address: ["", Validators.required],
       phNumber: ["", Validators.required],
     });
+
+    // this.apiService.getCompanyMasterDetails(this.data?.element?.id).subscribe({
+    //   next: (response: any) => {
+    //     console.log(response)
+    //   },
+    //   error: (error: any) => {}
+    // })
 
     if (this.data.element) {
       this.f["companyName"].setValue(this.data?.element?.companyName);
@@ -70,9 +77,14 @@ export class AddEditCompanyMasterComponent {
   onSubmit(form: FormGroup<any>) {
     console.log("formValue", form.value);
     if (form.valid) {
+      let payload: any = {
+        name: form?.value?.companyName,
+        domain: form?.value?.domain,
+        address: form?.value?.address,
+        phone: form?.value?.phNumber,
+      };
       if (this.data.isAdd) {
-        delete form.value.id;
-        this.apiService.addCompanyMaster(form.value).subscribe({
+        this.apiService.addCompanyMaster(payload).subscribe({
           next: (res: any) => {
             console.log("success", res);
             this.activeModal.close("Success");
@@ -82,8 +94,9 @@ export class AddEditCompanyMasterComponent {
           },
         });
       } else {
+        payload['id'] = this.data.element.id;
         this.apiService
-          .updateCompanyMaster(this.data.element.id, form.value)
+          .updateCompanyMaster(payload)
           .subscribe({
             next: (res: any) => {
               console.log("success", res);

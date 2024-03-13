@@ -1,0 +1,101 @@
+.login-page-wrapper {
+    height: 100vh;
+    overflow: hidden;
+    background-color: rgb(177, 57, 153);
+    background: linear-gradient(to right, rgb(171, 101, 222), rgb(177, 57, 153));
+  }
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .container .card {
+    margin: 15vh auto; 
+    width: 90%; 
+    max-width: 800px; 
+    min-height: 70vh;
+    display: flex;
+    flex-wrap: wrap; 
+    align-items: stretch;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+  }
+  
+  .card .image-container {
+    width: 100%; 
+  }
+  
+  .card .form-container {
+    width: 100%; 
+  }
+  
+  .card .login-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .form-field {
+    width: 100%; 
+    max-width: 280px; 
+    margin-bottom: 20px; 
+  }
+  
+  .login-header-lbl {
+    padding: 20px;
+    font-size: 20px;
+    color:rgb(232 136 212);
+  }
+  
+  .button-flex-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .button {
+    border-radius: 20px;
+    width: 130px;
+    font-size: 15px;
+    margin-top: 20px;
+    background-color: rgb(169, 39, 212);
+    background:linear-gradient(to right, rgb(133, 19, 171), rgb(199, 90, 235),rgb(169, 39, 212) );
+  }
+  
+  .aLink {
+    text-align: justify;
+    justify-content: space-between;
+    text-decoration: none;
+    font-size: small;
+    margin-top: 30px;
+  }
+  
+  .forgot-password {
+    margin-left: 10px; 
+  }
+  
+  :host ::ng-deep .mdc-text-field--outlined {
+    --mdc-outlined-text-field-container-shape: 28px;
+  }
+  
+  mat-error {
+    font-size: xx-small;
+  }
+  
+  /* Media Queries for responsiveness */
+  @media screen and (min-width: 768px) {
+    .container .card {
+      flex-direction: row; /* Adjusted flex direction for larger screens */
+    }
+    
+    .card .image-container {
+      width: 60%; /* Reset width for larger screens */
+    }
+  
+    .card .form-container {
+      width: 40%; /* Reset width for larger screens */
+    }
+  }
