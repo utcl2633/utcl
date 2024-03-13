@@ -1,67 +1,80 @@
 <section class="login-page-wrapper">
-    <div class="container">
-      <div class="card">
-        <div class="image-container">
-          <img src="assets/Utcl.png" alt="Ultratech Cement Logo" class="img" width="100%" height="100%">
-        </div>
-        <div class="form-container">
-          <mat-card class="login-container">
-            <mat-card-title class="login-header-lbl" >USER LOGIN</mat-card-title>
-            <mat-card-content>
-              <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-                <mat-form-field appearance="outline" class="form-field">
-                  <mat-label>Email</mat-label>
-                  <input type="text" matInput formControlName="email" 
-                  [ngClass]="{ 'is-invalid': f['email'].errors }" placeholder="Enter your email"  />
-                  @if(f['email'].errors && f['email'].errors?.['required'] ){
-                  <mat-error>
-                    Please Enter Email ID.
-                  </mat-error>
-                  }
-                  @if(f['email'].errors?.['email'] && f['email'].touched){
-                  <mat-error>
-                    Please Enter Valid Email ID.
-                  </mat-error>
-                  }
-                </mat-form-field>
-  
-                <mat-form-field appearance="outline" class="form-field">
-                  <mat-label>Password</mat-label>
-                  <input type="text" matInput formControlName="password" 
-                  [ngClass]="{ 'is-invalid': f['password'].errors }" placeholder="Enter your Password" />
-                  @if(f['password'].errors && f['password'].errors?.['required'] ){
-                  <mat-error>
-                    Please Enter Password.
-                  </mat-error>
-                  }
-                  @if(f['password'].errors?.['pattern'] && f['password'].touched){
-                  <mat-error>
-                    Password must be minimum eight characters including one uppercase  one loercase  and one numnber
-                  </mat-error>
-                  }
-                </mat-form-field>
-                <div>
-                  <a class="aLink forgot-email">
-                    Forgot Password?
-                  </a>
-                  <a class="aLink forgot-password">
-                    Forgot Email?
-                  </a>
+  <div class="container">
+    <div class="card">
+      <div class="image-container">
+        <img
+          src="assets/super.png"
+          alt="Ultratech Cement Logo"
+          class="img"
+          width="100%"
+          height="100%"
+        />
+      </div>
+      <div class="form-container">
+        <mat-card class="login-container">
+          <mat-card-title class="login-header-lbl">USER LOGIN</mat-card-title>
+          <mat-card-content>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Email</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  formControlName="email"
+                  [ngClass]="{ 'is-invalid': f['email'].errors }"
+                  placeholder="Enter your email"
+                />
+                @if(f['email'].errors && f['email'].errors['required'] ){
+                <mat-error>
+                  Please Enter Email ID.
+                </mat-error>
+                } @if(f['email'].errors?.['email'] && f['email'].touched){
+                <mat-error>
+                  Please Enter Valid Email ID.
+                </mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Password</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  formControlName="password"
+                  [ngClass]="{ 'is-invalid': f['password'].errors }"
+                  placeholder="Enter your Password"
+                />
+                @if(f['password'].errors && f['password'].errors['required'] ){
+                <mat-error>
+                  Please Enter Password.
+                </mat-error>
+                } @if(f['password'].errors?.['pattern'] &&
+                f['password'].touched){
+                <mat-error>
+                  Password must be minimum eight characters including one
+                  uppercase one loercase and one numnber
+                </mat-error>
+                }
+              </mat-form-field>
+              <div>
+                <a class="aLink forgot-email">
+                  Forgot Password?
+                </a>
+                <a class="aLink forgot-password">
+                  Forgot Email?
+                </a>
+              </div>
+              <mat-card-actions>
+                <div class="button-flex-container">
+                  <button mat-raised-button class="button" type="submit">
+                    Login
+                  </button>
                 </div>
-                <mat-card-actions>
-                  <div class="button-flex-container">
-                    <button mat-raised-button  class="button" type="submit"   >
-                      Login
-                    </button>
-                   
-                  </div>
-                </mat-card-actions>
-              </form>
-            </mat-card-content>
-          </mat-card>
-          
-        </div>
-  
+              </mat-card-actions>
+            </form>
+          </mat-card-content>
+        </mat-card>
       </div>
     </div>
-  </section>
+  </div>
+</section>

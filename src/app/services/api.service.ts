@@ -9,12 +9,16 @@ export class ApiService {
 
   private http =  inject(HttpClient);
 
+  userRegistration(payload: any): Observable<any> {
+    return this.http.post(`http://localhost:8080/addUser`, payload);
+  }
+
   getCompanyMaster(): Observable<any> {
     return this.http.get('http://localhost:8080/getAllCompanyMasters');
   }
 
-  getCompanyMasterDetails(id: any): Observable<any> {
-    return this.http.get('http://localhost:8080/getAllCompanyMasters'+id);
+  getListOfData(url: string): Observable<any> {
+    return this.http.get(url);
   }
 
   addCompanyMaster(payload: any): Observable<any> {
