@@ -14,6 +14,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { ApiService } from "../../services/api.service";
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-add-edit-role-type',
@@ -38,6 +39,7 @@ export class AddEditRoleTypeComponent {
     apiService = inject(ApiService);
     addEditForm!: FormGroup;
     submitted = false;
+    spinner = inject(NgxSpinnerService);
   
     ngOnInit() {
       this.addEditForm = this.formBuilder.group({
@@ -61,19 +63,22 @@ export class AddEditRoleTypeComponent {
     }
   
     onSubmit(form: FormGroup<any>) {
-      console.log('formValue', form.value);
+      this.spinner.show();
       if(this.data.isAdd) {
         delete form.value.id;
         this.apiService.addRoleType(form.value).subscribe({
           next: (res: any) => {
             console.log("success", res.message);
             this.activeModal.close('Success');
+            this.apiService.showSuccessWithTimeout("RoleType added Successfully");
+            this.spinner.hide();
             if(res.message==="RoleType added Successfully"){
               this.apiService.getRoleType();
             }
           },
           error: (err: any) => {
-            console.log("error: Something went wrong!");
+            this.apiService.showErrorWithTimeout('Something went wrong! Please try again');
+            this.spinner.hide();
           }
         })
       } else {
@@ -87,8 +92,12 @@ export class AddEditRoleTypeComponent {
           next: (res: any) => {
             console.log("success", res.message);
             this.activeModal.close('Success');
+            this.apiService.showSuccessWithTimeout("RoleType added Successfully");
+            this.spinner.hide();
           },
           error: (err: any) => {
+            this.apiService.showErrorWithTimeout('Something went wrong! Please try again');
+            this.spinner.hide();
             console.log("error: Something went wrong!");
           }
         })

@@ -16,6 +16,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { ApiService } from "../../services/api.service";
+import { NgxSpinnerService } from "ngx-spinner";
 
 export interface Animal {
   name: string;
@@ -43,6 +44,8 @@ export class AddEditRoleMasterComponent {
     @Input() data!: any;
     formBuilder = inject(FormBuilder);
     apiService = inject(ApiService);
+    spinner = inject(NgxSpinnerService);
+
     addEditForm!: FormGroup;
     submitted = false;
     roletypeslist:any = [];
@@ -82,6 +85,8 @@ export class AddEditRoleMasterComponent {
     }
   
     onSubmit(form: FormGroup<any>) {
+      this.spinner.show();
+
       console.log('formValue', form.value);
       if(this.data.isAdd) {
         delete form.value.id;
@@ -89,9 +94,12 @@ export class AddEditRoleMasterComponent {
           next: (res: any) => {
             console.log("success", res);
             this.activeModal.close('Success');
+            this.apiService.showSuccessWithTimeout("RoleType added Successfully");
+            this.spinner.hide();
           },
           error: (err: any) => {
-            console.log("error: Something went wrong!");
+            this.apiService.showErrorWithTimeout('Something went wrong! Please try again');
+            this.spinner.hide();
           }
         })
       } else {
