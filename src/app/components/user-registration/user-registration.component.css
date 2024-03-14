@@ -22,5 +22,6 @@
 }
 
 .mb-30{
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
+  width: 55%; margin: auto;
 }

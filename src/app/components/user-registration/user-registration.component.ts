@@ -13,20 +13,19 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { DomSanitizer } from "@angular/platform-browser";
+import { ToastModule } from "primeng/toast";
 import { catchError, forkJoin, of } from "rxjs";
 import { ApiService } from "../../services/api.service";
-import { ToastrService } from "ngx-toastr";
+import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
 
 export interface RoleMaster {
   id: number;
   name: string;
 }
-
 export interface Region {
   id: number;
   regionName: string;
 }
-
 export interface CompanyMaster {
   id: number;
   name: string;
@@ -47,9 +46,11 @@ export interface CompanyMaster {
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    ToastModule,
+    NgxSpinnerModule
   ],
   templateUrl: "./user-registration.component.html",
-  styleUrl: "./user-registration.component.css",
+  styleUrl: "./user-registration.component.css"
 })
 export class UserRegistrationComponent {
   registerForm!: FormGroup;
@@ -64,8 +65,12 @@ export class UserRegistrationComponent {
     "docx",
     "txt",
   ];
+  spinner = inject(NgxSpinnerService);
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder
+  ) {}
+
   companyMasterList!: CompanyMaster[];
   regionList!: Region[];
   roleMasterList!: RoleMaster[];
@@ -74,7 +79,6 @@ export class UserRegistrationComponent {
   isOpenPrev = false;
   sanitizer = inject(DomSanitizer);
   apiService = inject(ApiService);
-  toastr = inject(ToastrService);
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -113,13 +117,13 @@ export class UserRegistrationComponent {
   }
 
   onSubmit(form: any) {
-    console.log(form.value);
     this.registerForm.markAllAsTouched();
     this.submitted = true;
 
     if (this.registerForm.invalid) {
       return;
     } else {
+      this.spinner.show();
       let formData = form.value;
       let payload = {
         companyMasterId: formData?.company,
@@ -133,10 +137,12 @@ export class UserRegistrationComponent {
         agreementId: 0,
       };
       this.apiService.userRegistration(payload).subscribe((res) => {
-        this.toastr.success("Success:", "User registered successfully.", {
-          timeOut: 3000,
-        });
-        this.onReset();
+        this.registerForm.reset();
+        this.apiService.showSuccessWithTimeout('Registered Successfully');
+        this.spinner.hide();
+      }, (error) => {
+        this.apiService.showErrorWithTimeout('Something went wrong! Please try again');
+        this.spinner.hide();
       });
     }
   }

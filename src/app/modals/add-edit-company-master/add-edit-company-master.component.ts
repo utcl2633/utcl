@@ -13,8 +13,9 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { ToastrService } from "ngx-toastr";
 import { ApiService } from "../../services/api.service";
+import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
+import { ToastModule } from "primeng/toast";
 
 @Component({
   selector: "app-add-edit-company-master",
@@ -27,7 +28,9 @@ import { ApiService } from "../../services/api.service";
     CommonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    ToastModule,
+    NgxSpinnerModule
   ],
   templateUrl: "./add-edit-company-master.component.html",
   styleUrl: "./add-edit-company-master.component.css",
@@ -37,12 +40,11 @@ export class AddEditCompanyMasterComponent {
   @Input() data!: any;
   formBuilder = inject(FormBuilder);
   apiService = inject(ApiService);
-  toastr = inject(ToastrService)
   addEditForm!: FormGroup;
   submitted = false;
+  spinner = inject(NgxSpinnerService);
 
   ngOnInit() {
-    this.toastr.success("Company added successfully.");
     this.addEditForm = this.formBuilder.group({
       companyName: ["", Validators.required],
       domain: [
@@ -54,7 +56,7 @@ export class AddEditCompanyMasterComponent {
     });
 
     if (this.data.element) {
-      this.f["companyName"].setValue(this.data?.element?.companyName);
+      this.f["companyName"].setValue(this.data?.element?.name);
       this.f["domain"].setValue(this.data?.element?.domain);
       this.f["address"].setValue(this.data?.element?.address);
       this.f["phNumber"].setValue(this.data?.element?.phone);
@@ -71,8 +73,8 @@ export class AddEditCompanyMasterComponent {
   }
 
   onSubmit(form: FormGroup<any>) {
-    console.log("formValue", form.value);
     if (form.valid) {
+      this.spinner.show();
       let payload: any = {
         name: form?.value?.companyName,
         domain: form?.value?.domain,
@@ -82,34 +84,23 @@ export class AddEditCompanyMasterComponent {
       if (this.data.isAdd) {
         this.apiService.addCompanyMaster(payload).subscribe({
           next: (res: any) => {
-            console.log("success", res);
-            this.activeModal.close("Success");
-            this.toastr.success('Success:', 'Company added successfully.', {
-              timeOut: 3000
-            });
+            this.spinner.hide();
+            this.apiService.showSuccessWithTimeout("Company added Successfully");
+            this.spinner.hide();
           },
           error: (err: any) => {
-            console.log("error: Something went wrong!");
-            this.toastr.error('Error:', 'Something went wrong! Please try again after sometimes.', {
-              timeOut: 3000
-            });
+            this.apiService.showErrorWithTimeout('Something went wrong! Please try again');
+            this.spinner.hide();
           },
         });
       } else {
-        payload['id'] = this.data.element.id;
-        this.apiService
-          .updateCompanyMaster(payload)
-          .subscribe({
-            next: (res: any) => {
-              console.log("success", res);
-              this.activeModal.close("Success");
-              this.toastr.success("Company updated successfully.");
-            },
-            error: (err: any) => {
-              console.log("error: Something went wrong!");
-              this.toastr.error("Something went wrong! Please try again after sometimes.");
-            },
-          });
+        payload["id"] = this.data.element.id;
+        this.apiService.updateCompanyMaster(payload).subscribe({
+          next: (res: any) => {
+            this.activeModal.close("Success");
+          },
+          error: (err: any) => {},
+        });
       }
     }
   }
