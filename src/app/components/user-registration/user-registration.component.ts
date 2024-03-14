@@ -16,6 +16,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { ToastModule } from "primeng/toast";
 import { catchError, forkJoin, of } from "rxjs";
 import { ApiService } from "../../services/api.service";
+import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
 
 export interface RoleMaster {
   id: number;
@@ -46,6 +47,7 @@ export interface CompanyMaster {
     MatInputModule,
     MatSelectModule,
     ToastModule,
+    NgxSpinnerModule
   ],
   templateUrl: "./user-registration.component.html",
   styleUrl: "./user-registration.component.css"
@@ -63,6 +65,7 @@ export class UserRegistrationComponent {
     "docx",
     "txt",
   ];
+  spinner = inject(NgxSpinnerService);
 
   constructor(
     private formBuilder: FormBuilder
@@ -114,13 +117,13 @@ export class UserRegistrationComponent {
   }
 
   onSubmit(form: any) {
-    console.log(form.value);
     this.registerForm.markAllAsTouched();
     this.submitted = true;
 
     if (this.registerForm.invalid) {
       return;
     } else {
+      this.spinner.show();
       let formData = form.value;
       let payload = {
         companyMasterId: formData?.company,
@@ -136,8 +139,10 @@ export class UserRegistrationComponent {
       this.apiService.userRegistration(payload).subscribe((res) => {
         this.apiService.showSuccessWithTimeout('Registered Successfully');
         this.registerForm.reset();
+        this.spinner.hide();
       }, (error) => {
         this.apiService.showErrorWithTimeout('Something went wrong! Please try again');
+        this.spinner.hide();
       });
     }
   }

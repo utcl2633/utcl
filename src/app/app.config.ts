@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 
 export const appConfig: ApplicationConfig = {
@@ -19,6 +19,7 @@ export const appConfig: ApplicationConfig = {
     CommonModule, 
     provideAnimationsAsync(),
     provideHttpClient(withFetch()),
-    MessageService
+    MessageService,
+    ConfirmationService,
   ]
 };

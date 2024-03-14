@@ -1,5 +1,6 @@
 import { LiveAnnouncer } from "@angular/cdk/a11y";
 import { CommonModule } from "@angular/common";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { Component, ViewChild, inject } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatIconButton } from "@angular/material/button";
@@ -7,10 +8,13 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
 import { MatSort, MatSortModule, Sort } from "@angular/material/sort";
 import { MatTableDataSource, MatTableModule } from "@angular/material/table";
-import { ApiService } from "../../services/api.service";
-import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { NgbModal, NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
+import { ConfirmationService } from "primeng/api";
+import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { AddEditCompanyMasterComponent } from "../../modals/add-edit-company-master/add-edit-company-master.component";
+import { ApiService } from "../../services/api.service";
+import { ToastModule } from "primeng/toast";
 
 @Component({
   selector: "app-company-master",
@@ -25,6 +29,9 @@ import { AddEditCompanyMasterComponent } from "../../modals/add-edit-company-mas
     MatSortModule,
     HttpClientModule,
     NgbModalModule,
+    NgxSpinnerModule,
+    ConfirmDialogModule,
+    ToastModule
   ],
   templateUrl: "./company-master.component.html",
   styleUrl: "./company-master.component.css",
@@ -42,6 +49,8 @@ export class CompanyMasterComponent {
   apiService = inject(ApiService);
   _liveAnnouncer = inject(LiveAnnouncer);
   modalService = inject(NgbModal);
+  spinner = inject(NgxSpinnerService);
+  confirmationService = inject(ConfirmationService);
 
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
@@ -64,13 +73,25 @@ export class CompanyMasterComponent {
   }
 
   getData() {
+    this.dataSource.data = [
+      {
+        name: "dsds",
+        domain: "edsasad",
+        address: "sds",
+        phone: "1232132",
+      },
+    ];
+    this.dataSource.paginator = this.paginator;
+    this.spinner.show();
     this.apiService.getCompanyMaster().subscribe({
       next: (res: any) => {
         this.dataSource.data = res;
         this.dataSource.paginator = this.paginator;
+        this.spinner.hide();
       },
       error: (err: any) => {
         console.log(err);
+        this.spinner.hide();
       },
     });
   }
@@ -88,7 +109,29 @@ export class CompanyMasterComponent {
     });
   }
 
-  deleteCompanyMaster(id: any) {
-    this.apiService.deleteCompanyMaster(id).subscribe((res) => {});
+  deleteCompanyMaster(event: any, id: any) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: "Do you want to delete this record?",
+      header: "Delete Confirmation",
+      icon: "pi pi-info-circle",
+      acceptButtonStyleClass: "p-button-danger p-button-text",
+      rejectButtonStyleClass: "p-button-text p-button-text",
+      acceptIcon: "none",
+      rejectIcon: "none",
+
+      accept: () => {
+        this.spinner.show();
+        this.apiService.deleteCompanyMaster(id).subscribe((res) => {
+          this.apiService.showSuccessWithTimeout('Deleted Successfully');
+          this.spinner.hide();
+        }, (error) => {
+          this.apiService.showErrorWithTimeout('Something went wrong! Please try again');
+          this.spinner.hide();
+        });
+      },
+      reject: () => {
+      },
+    });
   }
 }
