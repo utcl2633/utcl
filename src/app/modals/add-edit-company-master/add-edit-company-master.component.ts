@@ -14,6 +14,8 @@ import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { ApiService } from "../../services/api.service";
+import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
+import { ToastModule } from "primeng/toast";
 
 @Component({
   selector: "app-add-edit-company-master",
@@ -26,7 +28,9 @@ import { ApiService } from "../../services/api.service";
     CommonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    ToastModule,
+    NgxSpinnerModule
   ],
   templateUrl: "./add-edit-company-master.component.html",
   styleUrl: "./add-edit-company-master.component.css",
@@ -38,6 +42,7 @@ export class AddEditCompanyMasterComponent {
   apiService = inject(ApiService);
   addEditForm!: FormGroup;
   submitted = false;
+  spinner = inject(NgxSpinnerService);
 
   ngOnInit() {
     this.addEditForm = this.formBuilder.group({
@@ -69,6 +74,7 @@ export class AddEditCompanyMasterComponent {
 
   onSubmit(form: FormGroup<any>) {
     if (form.valid) {
+      this.spinner.show();
       let payload: any = {
         name: form?.value?.companyName,
         domain: form?.value?.domain,
@@ -78,23 +84,23 @@ export class AddEditCompanyMasterComponent {
       if (this.data.isAdd) {
         this.apiService.addCompanyMaster(payload).subscribe({
           next: (res: any) => {
-            this.activeModal.close("Success");
+            this.spinner.hide();
+            this.apiService.showSuccessWithTimeout("Company added Successfully");
+            this.spinner.hide();
           },
           error: (err: any) => {
-            console.log("error: Something went wrong!");
+            this.apiService.showErrorWithTimeout('Something went wrong! Please try again');
+            this.spinner.hide();
           },
         });
       } else {
-        payload['id'] = this.data.element.id;
-        this.apiService
-          .updateCompanyMaster(payload)
-          .subscribe({
-            next: (res: any) => {
-              this.activeModal.close("Success");
-            },
-            error: (err: any) => {
-            },
-          });
+        payload["id"] = this.data.element.id;
+        this.apiService.updateCompanyMaster(payload).subscribe({
+          next: (res: any) => {
+            this.activeModal.close("Success");
+          },
+          error: (err: any) => {},
+        });
       }
     }
   }

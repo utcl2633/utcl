@@ -137,8 +137,8 @@ export class UserRegistrationComponent {
         agreementId: 0,
       };
       this.apiService.userRegistration(payload).subscribe((res) => {
-        this.apiService.showSuccessWithTimeout('Registered Successfully');
         this.registerForm.reset();
+        this.apiService.showSuccessWithTimeout('Registered Successfully');
         this.spinner.hide();
       }, (error) => {
         this.apiService.showErrorWithTimeout('Something went wrong! Please try again');

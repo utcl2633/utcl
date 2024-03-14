@@ -73,15 +73,6 @@ export class CompanyMasterComponent {
   }
 
   getData() {
-    this.dataSource.data = [
-      {
-        name: "dsds",
-        domain: "edsasad",
-        address: "sds",
-        phone: "1232132",
-      },
-    ];
-    this.dataSource.paginator = this.paginator;
     this.spinner.show();
     this.apiService.getCompanyMaster().subscribe({
       next: (res: any) => {
