@@ -45,21 +45,35 @@ export class AddEditRoleMasterComponent {
     apiService = inject(ApiService);
     addEditForm!: FormGroup;
     submitted = false;
+    roletypeslist:any = [];
   
     ngOnInit() {
+      this.getRoleTypeData();
       this.addEditForm = this.formBuilder.group({
-        roleType: ["", Validators.required],
+        roleTypeId: ["", Validators.required],
         roleName: ["", Validators.required]
       });
   
       if(this.data.element) {
-        this.f['roleType'].setValue(this.data?.element?.roleType);
+        this.f['roleTypeId'].setValue(this.data?.element?.roleTypeId);
         this.f['roleName'].setValue(this.data?.element?.roleName);
       }
     }
   
     get f() {
       return this.addEditForm.controls;
+    }
+
+    getRoleTypeData() {
+      this.apiService.getRoleType().subscribe({
+        next: (res: any) => {
+          this.roletypeslist = res;
+          console.log("res get role type dropdown",res);
+        },
+        error: (err: any) => {
+          console.log(err);
+        },
+      });
     }
   
     onReset() {
@@ -71,7 +85,7 @@ export class AddEditRoleMasterComponent {
       console.log('formValue', form.value);
       if(this.data.isAdd) {
         delete form.value.id;
-        this.apiService.addRoleType(form.value).subscribe({
+        this.apiService.addRoleMaster(form.value).subscribe({
           next: (res: any) => {
             console.log("success", res);
             this.activeModal.close('Success');
@@ -81,7 +95,14 @@ export class AddEditRoleMasterComponent {
           }
         })
       } else {
-        this.apiService.updateRoleMaster(this.data.element.id, form.value).subscribe({
+        let payload :any =
+          {
+            id: this.data.element.id,
+            roleTypeId: form.controls['roleTypeId'].value,
+            //roleTypeId: 902,
+            roleName: form.controls['roleName'].value
+          }
+        this.apiService.updateRoleMaster(payload).subscribe({
           next: (res: any) => {
             console.log("success", res);
             this.activeModal.close('Success');
@@ -93,12 +114,6 @@ export class AddEditRoleMasterComponent {
       }
     }
 
-    animals: Animal[] = [
-      {name: 'Dog', sound: 'Woof!'},
-      {name: 'Cat', sound: 'Meow!'},
-      {name: 'Cow', sound: 'Moo!'},
-      {name: 'Fox', sound: 'Wa-pa-pa-pa-pa-pa-pow!'},
-    ];
   }
 
 

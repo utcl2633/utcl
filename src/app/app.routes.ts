@@ -7,7 +7,7 @@ import { UserRegistrationComponent } from './components/user-registration/user-r
 import { LoginComponent } from './components/login/login.component';
 
 export const routes: Routes = [
-    {path: '', redirectTo: 'company-master', pathMatch: 'full'},
+    {path: '', redirectTo: 'role-type', pathMatch: 'full'},
     {path: 'login', component:LoginComponent},
     {path: 'company-master', component: CompanyMasterComponent},
     {path: 'role-type', component: RoleTypeComponent},
