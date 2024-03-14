@@ -11,6 +11,10 @@ import { ApiService } from "../../services/api.service";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { NgbModal, NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 import { AddEditRoleTypeComponent } from "../../modals/add-edit-role-type/add-edit-role-type.component";
+import { ToastModule } from "primeng/toast";
+import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
+import { ConfirmationService } from "primeng/api";
+import { ConfirmDialogModule } from "primeng/confirmdialog";
 
 @Component({
   selector: 'app-role-type',
@@ -25,6 +29,9 @@ import { AddEditRoleTypeComponent } from "../../modals/add-edit-role-type/add-ed
     MatSortModule,
     HttpClientModule,
     NgbModalModule,
+    ToastModule,
+    NgxSpinnerModule,
+    ConfirmDialogModule
   ],
   templateUrl: './role-type.component.html',
   styleUrl: './role-type.component.css'
@@ -37,6 +44,9 @@ export class RoleTypeComponent {
     apiService = inject(ApiService);
     _liveAnnouncer = inject(LiveAnnouncer);
     modalService = inject(NgbModal);
+    spinner = inject(NgxSpinnerService);
+    confirmationService = inject(ConfirmationService);
+
   
     dataSource = new MatTableDataSource<any>();
     @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
@@ -59,14 +69,18 @@ export class RoleTypeComponent {
     }
   
     getData() {
+      this.spinner.show();
       this.apiService.getRoleType().subscribe({
         next: (res: any) => {
+          this.spinner.hide();
           console.log("res get role type",res);
            this.dataSource.data = res;
           this.dataSource.paginator = this.paginator;
         },
         error: (err: any) => {
           console.log(err);
+          this.spinner.hide();
+
         },
       });
     }
@@ -80,10 +94,29 @@ export class RoleTypeComponent {
       };
     }
   
-    deleteRoleType(id: any) {
-      alert();
-      this.apiService.deleteRoleType(id).subscribe((res) => {
-        console.log("res delte",res.message);
-      })
+    deleteRoleType(event:any,id: any) {
+      this.confirmationService.confirm({
+        target: event.target as EventTarget,
+        message: "Do you want to delete this record?",
+        header: "Delete Confirmation",
+        icon: "pi pi-info-circle",
+        acceptButtonStyleClass: "p-button-danger p-button-text",
+        rejectButtonStyleClass: "p-button-text p-button-text",
+        acceptIcon: "none",
+        rejectIcon: "none",
+  
+        accept: () => {
+          this.spinner.show();
+          this.apiService.deleteRoleType(id).subscribe((res) => {
+            this.apiService.showSuccessWithTimeout('Deleted Successfully');
+            this.spinner.hide();
+          }, (error) => {
+            this.apiService.showErrorWithTimeout('Something went wrong! Please try again');
+            this.spinner.hide();
+          });
+        },
+        reject: () => {
+        },
+      });    
     }
   }
