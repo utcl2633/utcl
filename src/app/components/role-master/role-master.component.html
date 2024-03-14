@@ -21,7 +21,12 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header>
             Role Type 
           </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.roleType?.name}} </mat-cell>
+          <mat-cell *matCellDef="let element"> 
+            @for (item of element.roletype; track item.id) {
+              <span>{{item.name}}</span>
+              }         
+          
+          </mat-cell>
         </ng-container>
         <ng-container matColumnDef="roleName">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
