@@ -84,8 +84,8 @@ export class AddEditCompanyMasterComponent {
       if (this.data.isAdd) {
         this.apiService.addCompanyMaster(payload).subscribe({
           next: (res: any) => {
-            this.spinner.hide();
-            this.apiService.showSuccessWithTimeout("Company added Successfully");
+            this.activeModal.close("Success");
+            this.apiService.showSuccessWithTimeout("Company added successfully");
             this.spinner.hide();
           },
           error: (err: any) => {
@@ -98,8 +98,13 @@ export class AddEditCompanyMasterComponent {
         this.apiService.updateCompanyMaster(payload).subscribe({
           next: (res: any) => {
             this.activeModal.close("Success");
+            this.apiService.showSuccessWithTimeout("Company updated successfully");
+            this.spinner.hide();
           },
-          error: (err: any) => {},
+          error: (err: any) => {
+            this.apiService.showErrorWithTimeout('Something went wrong! Please try again');
+            this.spinner.hide();
+          },
         });
       }
     }

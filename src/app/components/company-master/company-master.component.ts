@@ -116,6 +116,7 @@ export class CompanyMasterComponent {
         this.apiService.deleteCompanyMaster(id).subscribe((res) => {
           this.apiService.showSuccessWithTimeout('Deleted Successfully');
           this.spinner.hide();
+          this.getData();
         }, (error) => {
           this.apiService.showErrorWithTimeout('Something went wrong! Please try again');
           this.spinner.hide();
