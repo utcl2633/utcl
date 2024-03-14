@@ -20,7 +20,7 @@ import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
 
 export interface RoleMaster {
   id: number;
-  name: string;
+  roleName: string;
 }
 export interface Region {
   id: number;
@@ -125,10 +125,11 @@ export class UserRegistrationComponent {
     } else {
       this.spinner.show();
       let formData = form.value;
+      
       let payload = {
         companyMasterId: formData?.company,
         regions: formData?.region,
-        roleMasterIds: formData?.role,
+        roleMasterIds: this.getRoleMasterIds(formData?.role),
         email: formData?.email,
         password: formData?.password,
         firstName: formData?.firstName,
@@ -137,7 +138,7 @@ export class UserRegistrationComponent {
         agreementId: 0,
       };
       this.apiService.userRegistration(payload).subscribe((res) => {
-        this.registerForm.reset();
+       this.onReset();
         this.apiService.showSuccessWithTimeout('Registered Successfully');
         this.spinner.hide();
       }, (error) => {
@@ -146,11 +147,18 @@ export class UserRegistrationComponent {
       });
     }
   }
-
+  getRoleMasterIds(roles:any){
+    let roleIds:any = [];
+    roles.forEach((name:any) => {
+      roleIds.push(this.roleMasterList.find(e=>e.roleName==name)?.id );
+    });
+    return roleIds;
+  }
   onReset() {
+    this.registerForm.reset();
     this.submitted = false;
     this.isOpenPrev = false;
-    this.registerForm.reset();
+    
   }
 
   handleFileInput(target: any) {

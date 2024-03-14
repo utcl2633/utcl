@@ -72,8 +72,8 @@
                   }
                 </mat-select-trigger>
                 @for (item of roleMasterList; track item.id) {
-                <mat-option [value]="item.id"
-                  >{{item.name}}</mat-option
+                <mat-option [value]="item.roleName"
+                  >{{item.roleName}}</mat-option
                 >
                 }
               </mat-select>
