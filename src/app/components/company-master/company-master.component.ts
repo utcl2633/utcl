@@ -11,7 +11,6 @@ import { ApiService } from "../../services/api.service";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { NgbModal, NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 import { AddEditCompanyMasterComponent } from "../../modals/add-edit-company-master/add-edit-company-master.component";
-import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-company-master",
@@ -41,7 +40,6 @@ export class CompanyMasterComponent {
   ];
   http = inject(HttpClient);
   apiService = inject(ApiService);
-  toastr = inject(ToastrService);
   _liveAnnouncer = inject(LiveAnnouncer);
   modalService = inject(NgbModal);
 
@@ -70,9 +68,6 @@ export class CompanyMasterComponent {
       next: (res: any) => {
         this.dataSource.data = res;
         this.dataSource.paginator = this.paginator;
-        this.toastr.success('Hello world!', 'Toastr fun!', {
-          timeOut: 3000
-        });
       },
       error: (err: any) => {
         console.log(err);
