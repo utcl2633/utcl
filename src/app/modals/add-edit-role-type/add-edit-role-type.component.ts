@@ -68,12 +68,13 @@ export class AddEditRoleTypeComponent {
     }
   
     onSubmit(form: FormGroup<any>) {
+      this.addEditForm.markAllAsTouched();
+      if(form.valid){
       this.spinner.show();
       if(this.data.isAdd) {
         delete form.value.id;
         this.apiService.addRoleType(form.value).subscribe({
-          next: (res: any) => {
-            console.log("success", res.message);
+          next: (res: any) => {          
             this.activeModal.close('Success');
             this.apiService.showSuccessWithTimeout(res.message);
             this.spinner.hide();
@@ -93,7 +94,6 @@ export class AddEditRoleTypeComponent {
           }
         this.apiService.updateRoleType(payload).subscribe({
           next: (res: any) => {
-            console.log("success", res.message);
             this.activeModal.close('Success');
             this.apiService.showSuccessWithTimeout(res.message);
             this.spinner.hide();
@@ -101,11 +101,13 @@ export class AddEditRoleTypeComponent {
           error: (err: any) => {
             this.apiService.showErrorWithTimeout('Something went wrong! Please try again');
             this.spinner.hide();
-            console.log("error: Something went wrong!");
+            this.activeModal.close('error');
+            
           }
         })
       }
     }
+  }
   }
 
 

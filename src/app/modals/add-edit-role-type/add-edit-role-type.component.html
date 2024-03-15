@@ -16,15 +16,22 @@
           type="text"
           matInput
           formControlName="roleTypeName"
+          minlength="2"
+          maxlength="50"
           class="form-control"
           [ngClass]="{ 'is-invalid': submitted && f['roleTypeName'].errors }"
-          placeholder="Enter your Role Type name"
+          placeholder="Enter Role Type name"
         />
         @if(f['roleTypeName'].errors?.['required'] && f['roleTypeName'].touched){
-        <mat-error>
-          Please Enter Role Type name.
-        </mat-error>
-        }
+          <mat-error>
+            Please enter role type name.
+          </mat-error>
+          } @if((f['roleTypeName'].errors?.['minlength'] ||
+          f['roleTypeName'].errors?.['maxlength']) && f['roleTypeName'].touched){
+          <mat-error>
+            Name length should be min 2 and max 50 character.
+          </mat-error>
+          }
       </mat-form-field>
     </div>
     <div class="form-group mb-2">

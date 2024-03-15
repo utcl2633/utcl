@@ -39,7 +39,7 @@ import { ConfirmationService } from "primeng/api";
 
 export class RoleMasterComponent {
     data: any = [];
-    displayColumns: string[] = ["roleType", "roleName", "action"];
+    displayColumns: string[] = ["roleName", "roleType", "action"];
     selectedValue!: string;
     http = inject(HttpClient);
     apiService = inject(ApiService);

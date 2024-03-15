@@ -76,10 +76,9 @@ export class AddEditRoleMasterComponent {
       this.apiService.getRoleType().subscribe({
         next: (res: any) => {
           this.roletypeslist = res;
-          console.log("res get role type dropdown",res);
         },
         error: (err: any) => {
-          console.log(err);
+         
         },
       });
     }
@@ -90,14 +89,13 @@ export class AddEditRoleMasterComponent {
     }
   
     onSubmit(form: FormGroup<any>) {
+      this.addEditForm.markAllAsTouched();
+      if(form.valid){
       this.spinner.show();
-
-      console.log('formValue', form.value);
-      if(this.data.isAdd) {
+       if(this.data.isAdd) {
         delete form.value.id;
         this.apiService.addRoleMaster(form.value).subscribe({
           next: (res: any) => {
-            console.log("success", res);
             this.activeModal.close('Success');
             this.apiService.showSuccessWithTimeout(res.message);
             this.spinner.hide();
@@ -105,6 +103,7 @@ export class AddEditRoleMasterComponent {
           error: (err: any) => {
             this.apiService.showErrorWithTimeout('Something went wrong! Please try again');
             this.spinner.hide();
+            this.activeModal.close('error');
           }
         })
       } else {
@@ -117,18 +116,17 @@ export class AddEditRoleMasterComponent {
           }
         this.apiService.updateRoleMaster(payload).subscribe({
           next: (res: any) => {
-            console.log("success", res);
             this.apiService.showSuccessWithTimeout(res.message);
             this.spinner.hide();
             this.activeModal.close('Success');
           },
           error: (err: any) => {
-            console.log("error: Something went wrong!");
-          }
+            this.activeModal.close('error');
+           }
         })
       }
     }
-
+  }
   }
 
 
