@@ -22,6 +22,11 @@
 }
 
 .mb-30{
-  /* margin-bottom: 30px; */
   width: 55%; margin: auto;
+}
+
+@media (max-width: 575px) {
+  .mb-30{
+    width: 100%; margin: auto;
+  }
 }
