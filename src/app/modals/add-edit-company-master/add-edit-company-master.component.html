@@ -11,7 +11,7 @@
   <form [formGroup]="addEditForm" (ngSubmit)="onSubmit(addEditForm)">
     <div class="form-group mb-2">
       <mat-form-field appearance="outline" class="w-100">
-        <mat-label>Company Name</mat-label>
+        <mat-label>Name</mat-label>
         <input
           type="text"
           matInput
@@ -20,16 +20,16 @@
           maxlength="50"
           class="form-control"
           [ngClass]="{ 'is-invalid': submitted && f['companyName'].errors }"
-          placeholder="Enter your company name"
+          placeholder="Enter the name"
         />
         @if(f['companyName'].errors?.['required'] && f['companyName'].touched){
         <mat-error>
-          Please enter Company Name.
+          Please enter the Name.
         </mat-error>
         } @if((f['companyName'].errors?.['minlength'] ||
         f['companyName'].errors?.['maxlength']) && f['companyName'].touched){
         <mat-error>
-          Company Name length should be min 2 and max 50 character.
+          Name length should be min 2 and max 50 character.
         </mat-error>
         }
       </mat-form-field>
@@ -43,11 +43,11 @@
           formControlName="domain"
           class="form-control"
           [ngClass]="{ 'is-invalid': submitted && f['domain'].errors }"
-          placeholder="Enter your Domain starts with @"
+          placeholder="Enter the Domain starts with @"
         />
         @if(f['domain'].errors?.['required'] && f['domain'].touched){
         <mat-error>
-          Please enter Domain.
+          Please enter the Domain.
         </mat-error>
         } @if(f['domain'].errors?.['pattern'] && f['domain'].touched){
         <mat-error>
@@ -67,11 +67,11 @@
           maxlength="50"
           class="form-control"
           [ngClass]="{ 'is-invalid': submitted && f['address'].errors }"
-          placeholder="Enter your Address"
+          placeholder="Enter the Address"
         />
         @if(f['address'].errors?.['required'] && f['address'].touched){
         <mat-error>
-          Please enter Address.
+          Please enter the Address.
         </mat-error>
         } @if((f['address'].errors?.['minlength'] ||
         f['address'].errors?.['maxlength']) && f['address'].touched){
@@ -93,11 +93,11 @@
           onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 43"
           class="form-control"
           [ngClass]="{ 'is-invalid': submitted && f['phNumber'].errors }"
-          placeholder="Enter your Phone Number"
+          placeholder="Enter the Phone Number"
         />
         @if(f['phNumber'].errors?.['required'] && f['phNumber'].touched){
         <mat-error>
-          Please enter Phone Number.
+          Please enter the Phone Number.
         </mat-error>
         } @if(f['phNumber'].errors?.['minlength'] && f['phNumber'].touched){
         <mat-error>
@@ -108,7 +108,7 @@
     </div>
     <div class="text-center mt-4">
       <button class="btn btn-secondary" type="reset" (click)="onReset()">
-        Cancel
+        Reset
       </button>
       <button type="submit" class="btn btn-primary marl-2">
         {{data.isAdd? 'Save': 'Update'}}

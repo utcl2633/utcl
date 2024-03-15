@@ -93,16 +93,16 @@
                 formControlName="email"
                 class="form-control"
                 [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
-                placeholder="Enter your email"
+                placeholder="Enter the Email ID"
               />
               @if(f['email'].errors?.['required'] && f['email'].touched){
               <mat-error>
-                Please enter Email ID.
+                Please enter the Email ID.
               </mat-error>
               }
               @if(f['email'].errors?.['email'] && f['email'].touched){
                 <mat-error>
-                  Please enter valid Email ID.
+                  Please enter a valid Email ID.
                 </mat-error>
                 }
             </mat-form-field>
@@ -113,14 +113,21 @@
               <input
                 type="password"
                 matInput
+                minlength="6"
+                maxlength="20"
                 formControlName="password"
                 class="form-control"
                 [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
-                placeholder="Enter your password"
+                placeholder="Enter the password"
               />
               @if(f['password'].errors?.['required'] && f['password'].touched){
               <mat-error>
-                Please enter Password.
+                Please enter the Password.
+              </mat-error>
+              } @if((f['password'].errors?.['minlength'] ||
+              f['password'].errors?.['maxlength']) && f['password'].touched){
+              <mat-error>
+                Password length should be min 6 and max 20 character.
               </mat-error>
               }
             </mat-form-field>
@@ -137,12 +144,12 @@
                 maxlength="50"
                 onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122)"
                 [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }"
-                placeholder="Enter your First Name"
+                placeholder="Enter the First Name"
               />
               @if(f['firstName'].errors?.['required'] &&
               f['firstName'].touched){
               <mat-error>
-                Please enter First Name.
+                Please enter the First Name.
               </mat-error>
               } @if((f['firstName'].errors?.['minlength'] ||
               f['firstName'].errors?.['maxlength']) && f['firstName'].touched){
@@ -164,11 +171,11 @@
                 maxlength="50"
                 onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122)"
                 [ngClass]="{ 'is-invalid': submitted && f['lastName'].errors }"
-                placeholder="Enter your Last Name"
+                placeholder="Enter the Last Name"
               />
               @if(f['lastName'].errors?.['required'] && f['lastName'].touched){
               <mat-error>
-                Please enter Last Name.
+                Please enter the Last Name.
               </mat-error>
               } @if((f['lastName'].errors?.['minlength'] ||
               f['lastName'].errors?.['maxlength']) && f['lastName'].touched){
@@ -190,11 +197,11 @@
                 onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 43"
                 class="form-control"
                 [ngClass]="{ 'is-invalid': submitted && f['phNumber'].errors }"
-                placeholder="Enter your Phone Number"
+                placeholder="Enter the Phone Number"
               />
               @if(f['phNumber'].errors?.['required'] && f['phNumber'].touched){
               <mat-error>
-                Please enter Phone Number.
+                Please enter the Phone Number.
               </mat-error>
               } @if(f['phNumber'].errors?.['minlength'] &&
               f['phNumber'].touched){
@@ -224,7 +231,7 @@
           </div> -->
           <div class="text-center mt-4">
             <button class="btn btn-secondary" type="reset" (click)="onReset()">
-              Cancel
+              Reset
             </button>
             <button type="submit" class="btn btn-primary marl-2">
               Register
