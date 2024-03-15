@@ -113,6 +113,7 @@ export class RoleTypeComponent {
           this.spinner.show();
           this.apiService.deleteRoleType(id).subscribe((res) => {
             this.apiService.showSuccessWithTimeout(res.message);
+            this.getData();
             this.spinner.hide();
           }, (error) => {
             this.apiService.showErrorWithTimeout('Something went wrong! Please try again');
