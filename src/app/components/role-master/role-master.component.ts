@@ -39,7 +39,7 @@ import { ConfirmationService } from "primeng/api";
 
 export class RoleMasterComponent {
     data: any = [];
-    displayColumns: string[] = ["roleType", "roleName", "action"];
+    displayColumns: string[] = ["roleName", "roleType", "action"];
     selectedValue!: string;
     http = inject(HttpClient);
     apiService = inject(ApiService);
@@ -93,6 +93,10 @@ export class RoleMasterComponent {
         isAdd: addOrEdit,
         element: element,
       };
+      modalRef.result.then((result) => {
+        console.log(result);
+        this.getData();
+      });
     }
   
     deleteRoleMaster(event:any,id: any) {
@@ -109,8 +113,9 @@ export class RoleMasterComponent {
         accept: () => {
           this.spinner.show();
           this.apiService.deleteRoleMaster(id).subscribe((res) => {
-            this.apiService.showSuccessWithTimeout('Deleted Successfully');
+            this.apiService.showSuccessWithTimeout(res.message);
             this.spinner.hide();
+            this.getData();
           }, (error) => {
             this.apiService.showErrorWithTimeout('Something went wrong! Please try again');
             this.spinner.hide();

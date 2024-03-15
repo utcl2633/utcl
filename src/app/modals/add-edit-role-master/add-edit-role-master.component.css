@@ -13,3 +13,7 @@
     z-index: 100;
     color:white;
 }
+
+.h-50 {
+  height: 50px !important;
+}

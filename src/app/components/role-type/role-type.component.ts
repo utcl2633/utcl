@@ -92,6 +92,10 @@ export class RoleTypeComponent {
         isAdd: addOrEdit,
         element: element,
       };
+      modalRef.result.then((result) => {
+        console.log(result);
+        this.getData();
+      });
     }
   
     deleteRoleType(event:any,id: any) {
@@ -108,7 +112,8 @@ export class RoleTypeComponent {
         accept: () => {
           this.spinner.show();
           this.apiService.deleteRoleType(id).subscribe((res) => {
-            this.apiService.showSuccessWithTimeout('Deleted Successfully');
+            this.apiService.showSuccessWithTimeout(res.message);
+            this.getData();
             this.spinner.hide();
           }, (error) => {
             this.apiService.showErrorWithTimeout('Something went wrong! Please try again');

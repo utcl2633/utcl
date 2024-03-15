@@ -1,4 +1,4 @@
-<div class="modal-header bg-color">
+<div class="modal-header bg-color h-50">
   <h4 class="modal-title">{{data.header}}</h4>
   <button
     type="button"
@@ -13,12 +13,19 @@
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Role Type </mat-label>
         <mat-select placeholder="Role Type" formControlName="roleTypeId"
-        class="form-control"  required>
+        class="form-control"  
+        [ngClass]="{ 'is-invalid': submitted && f['roleTypeId'].errors }"
+        placeholder="Select the Role Type"
+        required>
          <mat-option *ngFor="let types of roletypeslist" [value]="types.id">
           {{types?.roleTypeName}}
         </mat-option> 
         </mat-select>      
-       
+        @if(f['roleTypeId'].errors?.['required'] && f['roleTypeId'].touched){
+          <mat-error>
+            Please Select the Role Type.
+          </mat-error>
+          } 
       </mat-form-field>
     </div>
     <div class="form-group mb-2">
@@ -30,15 +37,24 @@
           formControlName="roleName"
           class="form-control"
           [ngClass]="{ 'is-invalid': submitted && f['roleName'].errors }"
-          placeholder="Enter your Role Name"
+          placeholder="Enter the Role Name"
         />
-       
+        @if(f['roleName'].errors?.['required'] && f['roleName'].touched){
+          <mat-error>
+            Please enter the Role Name.
+          </mat-error>
+          } @if((f['roleName'].errors?.['minlength'] ||
+          f['roleName'].errors?.['maxlength']) && f['roleName'].touched){
+          <mat-error>
+            Name length should be min 2 and max 50 character.
+          </mat-error>
+          }
       </mat-form-field>
     </div>
     
     <div class="text-center mt-4">
       <button class="btn btn-secondary" type="reset" (click)="onReset()">
-        Cancel
+        Reset
       </button>
       <button type="submit" class="btn btn-primary marl-2">
         {{data.isAdd? 'Save': 'Update'}}
