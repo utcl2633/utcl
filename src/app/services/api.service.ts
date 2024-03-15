@@ -96,7 +96,7 @@ export class ApiService {
   }
 
   getRoleMaster(): Observable<any> {
-    return this.http.get("http://localhost:8080/getAllRoleMaster");
+    return this.http.get("http://localhost:8080/getAllRoleMasters");
   }
 
   addRoleMaster(payload: any): Observable<any> {

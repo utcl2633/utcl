@@ -93,6 +93,10 @@ export class RoleMasterComponent {
         isAdd: addOrEdit,
         element: element,
       };
+      modalRef.result.then((result) => {
+        console.log(result);
+        this.getData();
+      });
     }
   
     deleteRoleMaster(event:any,id: any) {
@@ -109,7 +113,7 @@ export class RoleMasterComponent {
         accept: () => {
           this.spinner.show();
           this.apiService.deleteRoleMaster(id).subscribe((res) => {
-            this.apiService.showSuccessWithTimeout('Deleted Successfully');
+            this.apiService.showSuccessWithTimeout(res.message);
             this.spinner.hide();
           }, (error) => {
             this.apiService.showErrorWithTimeout('Something went wrong! Please try again');

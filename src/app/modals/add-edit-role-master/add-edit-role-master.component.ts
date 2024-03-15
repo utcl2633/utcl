@@ -99,7 +99,7 @@ export class AddEditRoleMasterComponent {
           next: (res: any) => {
             console.log("success", res);
             this.activeModal.close('Success');
-            this.apiService.showSuccessWithTimeout("RoleType added Successfully");
+            this.apiService.showSuccessWithTimeout(res.message);
             this.spinner.hide();
           },
           error: (err: any) => {
@@ -118,6 +118,8 @@ export class AddEditRoleMasterComponent {
         this.apiService.updateRoleMaster(payload).subscribe({
           next: (res: any) => {
             console.log("success", res);
+            this.apiService.showSuccessWithTimeout(res.message);
+            this.spinner.hide();
             this.activeModal.close('Success');
           },
           error: (err: any) => {

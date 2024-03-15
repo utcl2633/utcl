@@ -75,11 +75,9 @@ export class AddEditRoleTypeComponent {
           next: (res: any) => {
             console.log("success", res.message);
             this.activeModal.close('Success');
-            this.apiService.showSuccessWithTimeout("RoleType added Successfully");
+            this.apiService.showSuccessWithTimeout(res.message);
             this.spinner.hide();
-            if(res.message==="RoleType added Successfully"){
-              this.apiService.getRoleType();
-            }
+           
           },
           error: (err: any) => {
             this.apiService.showErrorWithTimeout('Something went wrong! Please try again');
@@ -97,7 +95,7 @@ export class AddEditRoleTypeComponent {
           next: (res: any) => {
             console.log("success", res.message);
             this.activeModal.close('Success');
-            this.apiService.showSuccessWithTimeout("RoleType added Successfully");
+            this.apiService.showSuccessWithTimeout(res.message);
             this.spinner.hide();
           },
           error: (err: any) => {
