@@ -73,6 +73,7 @@ export class AddEditCompanyMasterComponent {
   }
 
   onSubmit(form: FormGroup<any>) {
+    this.addEditForm.markAllAsTouched();
     if (form.valid) {
       this.spinner.show();
       let payload: any = {

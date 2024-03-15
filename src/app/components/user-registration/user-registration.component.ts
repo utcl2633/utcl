@@ -119,7 +119,6 @@ export class UserRegistrationComponent {
   onSubmit(form: any) {
     this.registerForm.markAllAsTouched();
     this.submitted = true;
-
     if (this.registerForm.invalid) {
       return;
     } else {
@@ -158,7 +157,7 @@ export class UserRegistrationComponent {
     this.registerForm.reset();
     this.submitted = false;
     this.isOpenPrev = false;
-    
+    this.registerForm.markAsUntouched();
   }
 
   handleFileInput(target: any) {

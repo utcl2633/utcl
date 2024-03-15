@@ -17,6 +17,13 @@
         matSort
         (matSortChange)="announceSortChange($event)"
       >
+      <ng-container matColumnDef="roleName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Name
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.roleName}} </mat-cell>
+      </ng-container> 
+      
         <ng-container matColumnDef="roleType">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
             Role Type 
@@ -28,12 +35,7 @@
           
           </mat-cell>
         </ng-container>
-        <ng-container matColumnDef="roleName">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Role Name
-          </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.roleName}} </mat-cell>
-        </ng-container> 
+       
         <ng-container matColumnDef="action">
           <mat-header-cell *matHeaderCellDef>
             Action
@@ -53,7 +55,7 @@
               matTooltip="Click to Delete"
               class="iconbutton"
               color="warn"
-              (click)="deleteRoleMaster(element.id)"
+              (click)="deleteRoleMaster($event, element.id)"
             >
               <mat-icon>delete</mat-icon>
             </button>
@@ -70,3 +72,7 @@
     </div>
   </div>
 </div>
+
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type="ball-beat" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>

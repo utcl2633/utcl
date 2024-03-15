@@ -19,7 +19,7 @@
       >
         <ng-container matColumnDef="roleTypeName">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
-            Role Type Name
+            Name
           </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.roleTypeName}} </mat-cell>
         </ng-container>
@@ -48,7 +48,7 @@
               matTooltip="Click to Delete"
               class="iconbutton"
               color="warn"
-              (click)="deleteRoleType(element.id)"
+              (click)="deleteRoleType($event,element.id)"
             >
               <mat-icon>delete</mat-icon>
             </button>
@@ -65,3 +65,8 @@
     </div>
   </div>
 </div>
+
+
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type="ball-beat" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>

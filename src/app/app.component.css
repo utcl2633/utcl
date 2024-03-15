@@ -15,13 +15,12 @@
 @media (max-width: 575px) {
   .main-div {
     margin-top: 80px;
-    margin-left: 200px !important;
+    margin-left: 0px !important;
     z-index: 0;
   }
 
   .mt-80 {
     transition: all 0.3s;
-    margin-left: 200px;
     margin-top: 80px;
   }
 }

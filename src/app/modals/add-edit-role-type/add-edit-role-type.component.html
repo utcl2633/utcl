@@ -44,7 +44,7 @@
     
     <div class="text-center mt-4">
       <button class="btn btn-secondary" type="reset" (click)="onReset()">
-        Cancel
+        Reset
       </button>
       <button type="submit" class="btn btn-primary marl-2">
         {{data.isAdd? 'Save': 'Update'}}
@@ -52,12 +52,8 @@
     </div>
   </form>
 </div>
-<div class="modal-footer">
-  <button
-    type="button"
-    class="btn btn-outline-dark"
-    (click)="activeModal.close('Close click')"
-  >
-    Close
-  </button>
-</div>
+
+
+
+<p-toast></p-toast>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type="ball-beat" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
