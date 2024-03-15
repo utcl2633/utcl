@@ -16,7 +16,9 @@ import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { ApiService } from "../../services/api.service";
-import { NgxSpinnerService } from "ngx-spinner";
+import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
+import { ConfirmDialogModule } from "primeng/confirmdialog";
+import { ToastModule } from "primeng/toast";
 
 export interface Animal {
   name: string;
@@ -35,6 +37,9 @@ export interface Animal {
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    NgxSpinnerModule,
+    ConfirmDialogModule,
+    ToastModule
   ],
   templateUrl: './add-edit-role-master.component.html',
   styleUrl: './add-edit-role-master.component.css'

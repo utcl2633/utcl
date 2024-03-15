@@ -14,7 +14,9 @@ import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { ApiService } from "../../services/api.service";
-import { NgxSpinnerService } from "ngx-spinner";
+import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
+import { ToastModule } from "primeng/toast";
+import { ConfirmDialogModule } from "primeng/confirmdialog";
 
 @Component({
   selector: 'app-add-edit-role-type',
@@ -28,6 +30,9 @@ import { NgxSpinnerService } from "ngx-spinner";
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    NgxSpinnerModule,
+    ConfirmDialogModule,
+    ToastModule
   ],
   templateUrl: './add-edit-role-type.component.html',
   styleUrl: './add-edit-role-type.component.css'
