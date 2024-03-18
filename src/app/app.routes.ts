@@ -5,15 +5,17 @@ import { RoleMasterComponent } from './components/role-master/role-master.compon
 import { RoleTypeComponent } from './components/role-type/role-type.component';
 import { UserRegistrationComponent } from './components/user-registration/user-registration.component';
 import { LoginComponent } from './components/login/login.component';
+import { AuthGuardService } from './services/auth.guard.service';
 
 export const routes: Routes = [
-    {path: '', redirectTo: 'role-type', pathMatch: 'full'},
+    { path: '', redirectTo: 'login', pathMatch: 'full' },    
     {path: 'login', component:LoginComponent},
-    {path: 'company-master', component: CompanyMasterComponent},
-    {path: 'role-type', component: RoleTypeComponent},
-    {path: 'role-master', component: RoleMasterComponent},
-    {path: 'user-registration', component: UserRegistrationComponent},
-    {path: 'digital-sign', component: DigitalSignatureComponent},
+    {path: 'company-master', component: CompanyMasterComponent,canActivate: [AuthGuardService]},
+    {path: 'role-type', component: RoleTypeComponent, canActivate: [AuthGuardService]},
+    {path: 'role-master', component: RoleMasterComponent,canActivate: [AuthGuardService]},
+    {path: 'user-registration', component: UserRegistrationComponent, canActivate: [AuthGuardService]},
+    {path: 'digital-sign', component: DigitalSignatureComponent , canActivate: [AuthGuardService]},
+    { path: '**', redirectTo: 'role-type' },
 
     
 ];
