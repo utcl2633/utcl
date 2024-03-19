@@ -45,54 +45,58 @@ export interface Animal {
   styleUrl: './add-edit-role-master.component.css'
 })
 export class AddEditRoleMasterComponent {
-    activeModal = inject(NgbActiveModal);
-    @Input() data!: any;
-    formBuilder = inject(FormBuilder);
-    apiService = inject(ApiService);
-    spinner = inject(NgxSpinnerService);
+  activeModal = inject(NgbActiveModal);
+  @Input() data!: any;
+  formBuilder = inject(FormBuilder);
+  apiService = inject(ApiService);
+  spinner = inject(NgxSpinnerService);
 
-    addEditForm!: FormGroup;
-    submitted = false;
-    roletypeslist:any = [];
-  
-    ngOnInit() {
-      this.getRoleTypeData();
-      this.addEditForm = this.formBuilder.group({
-        roleTypeId: ["", Validators.required],
-        roleName: ["", Validators.required]
-      });
-  
-      if(this.data.element) {
-        this.f['roleTypeId'].setValue(this.data?.element?.roleTypeId);
+  addEditForm!: FormGroup;
+  submitted = false;
+  roletypeslist: any = [];
+
+  ngOnInit() {
+    this.getRoleTypeData();
+    this.addEditForm = this.formBuilder.group({
+      roleTypeId: ["", Validators.required],
+      roleName: ["", Validators.required]
+    });
+    try {
+      if (this.data.element) {
+        this.f['roleTypeId'].setValue(this.data?.element?.['roletype']?.[0]?.['id']);
         this.f['roleName'].setValue(this.data?.element?.roleName);
       }
-    }
-  
-    get f() {
-      return this.addEditForm.controls;
+    } catch (error) {
+
     }
 
-    getRoleTypeData() {
-      this.apiService.getRoleType().subscribe({
-        next: (res: any) => {
-          this.roletypeslist = res;
-        },
-        error: (err: any) => {
-         
-        },
-      });
-    }
-  
-    onReset() {
-      this.submitted = false;
-      this.addEditForm.reset();
-    }
-  
-    onSubmit(form: FormGroup<any>) {
-      this.addEditForm.markAllAsTouched();
-      if(form.valid){
+  }
+
+  get f() {
+    return this.addEditForm.controls;
+  }
+
+  getRoleTypeData() {
+    this.apiService.getRoleType().subscribe({
+      next: (res: any) => {
+        this.roletypeslist = res;
+      },
+      error: (err: any) => {
+
+      },
+    });
+  }
+
+  onReset() {
+    this.submitted = false;
+    this.addEditForm.reset();
+  }
+
+  onSubmit(form: FormGroup<any>) {
+    this.addEditForm.markAllAsTouched();
+    if (form.valid) {
       this.spinner.show();
-       if(this.data.isAdd) {
+      if (this.data.isAdd) {
         delete form.value.id;
         this.apiService.addRoleMaster(form.value).subscribe({
           next: (res: any) => {
@@ -107,13 +111,13 @@ export class AddEditRoleMasterComponent {
           }
         })
       } else {
-        let payload :any =
-          {
-            id: this.data.element.id,
-            roleTypeId: form.controls['roleTypeId'].value,
-            //roleTypeId: 902,
-            roleName: form.controls['roleName'].value
-          }
+        let payload: any =
+        {
+          id: this.data.element.id,
+          roleTypeId: form.controls['roleTypeId'].value,
+          //roleTypeId: 902,
+          roleName: form.controls['roleName'].value
+        }
         this.apiService.updateRoleMaster(payload).subscribe({
           next: (res: any) => {
             this.apiService.showSuccessWithTimeout(res.message);
@@ -122,11 +126,11 @@ export class AddEditRoleMasterComponent {
           },
           error: (err: any) => {
             this.activeModal.close('error');
-           }
+          }
         })
       }
     }
   }
-  }
+}
 
 
