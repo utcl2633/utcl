@@ -5,11 +5,13 @@
 .main-div {
   margin-left: 200px;
   margin-top: 80px;
+  overflow: hidden;
 }
 
 .mt-80 {
   transition: all 0.3s;
   margin-top: 80px;
+  overflow: hidden;
 }
 
 @media (max-width: 575px) {
@@ -17,10 +19,12 @@
     margin-top: 80px;
     margin-left: 0px !important;
     z-index: 0;
+    overflow: auto;
   }
 
   .mt-80 {
     transition: all 0.3s;
     margin-top: 80px;
+    overflow: auto;
   }
 }
