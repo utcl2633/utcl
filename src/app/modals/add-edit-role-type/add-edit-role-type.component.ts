@@ -81,7 +81,7 @@ export class AddEditRoleTypeComponent {
            
           },
           error: (err: any) => {
-            this.apiService.showErrorWithTimeout('Something went wrong! Please try again');
+            this.apiService.showErrorWithTimeout(err?.error?.subErrors?.field+": " + err?.error?.subErrors?.message);
             this.spinner.hide();
           }
         })
@@ -99,7 +99,7 @@ export class AddEditRoleTypeComponent {
             this.spinner.hide();
           },
           error: (err: any) => {
-            this.apiService.showErrorWithTimeout('Something went wrong! Please try again');
+            this.apiService.showErrorWithTimeout(err?.error?.subErrors?.field+": " + err?.error?.subErrors?.message);
             this.spinner.hide();
             this.activeModal.close('error');
             
