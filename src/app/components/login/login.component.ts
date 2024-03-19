@@ -1,5 +1,6 @@
+import { LiveAnnouncer } from "@angular/cdk/a11y";
 import { CommonModule } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {
   FormControl,
   FormGroup,
@@ -18,6 +19,9 @@ import {
   RouterModule,
   RouterOutlet,
 } from "@angular/router";
+import { AuthService } from "../../services/auth.service";
+import { LocalStorageService } from "../../services/local-storage.service";
+
 @Component({
   selector: "app-login",
   standalone: true,
@@ -40,6 +44,9 @@ import {
   styleUrl: "./login.component.css",
 })
 export class LoginComponent {
+  router = inject(Router);
+  _liveAnnouncer = inject(LiveAnnouncer);
+  authService = inject(AuthService);
   strongPasswordRegx = /^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{8,}$/;
   hide: boolean = true;
   loginForm = new FormGroup({
@@ -49,17 +56,36 @@ export class LoginComponent {
       Validators.pattern(this.strongPasswordRegx),
     ]),
   });
+constructor(private localStorageService: LocalStorageService){
+ this.authService.isLoggedIn().subscribe(value =>{
+  if(value){
 
-  constructor(private router: Router) {}
+  }
+ })
+
+}
+
+  
   get f() {
     return this.loginForm.controls;
   }
-  onSubmit() {
-    if (this.loginForm.valid) {
-      alert("Form Submitted succesfully!!!");
-      console.table(this.loginForm.value);
-      this.router.navigateByUrl("/company-master");
-    }
-    this.loginForm.reset();
+  onSubmit() {   
+
+  if (this.loginForm.valid) {
+    alert("Form Submitted succesfully!!!");
+   let email = this.loginForm.controls['email'].value;
+   let password = this.loginForm.controls['password'].value;
+
+    this.authService.login(email, password).subscribe((loggedIn:any) => {
+      if (loggedIn) {  
+        this.localStorageService.setItem('loggedInUser', { email, password, isLoggedIn: true });     
+        this.router.navigate(['/role-type']);
+      } else {
+        this.router.navigate(['/login']);
+      }
+    });
+  } else {
+    this.loginForm.markAllAsTouched();
   }
+}
 }
