@@ -21,6 +21,7 @@ import {
 } from "@angular/router";
 import { AuthService } from "../../services/auth.service";
 import { LocalStorageService } from "../../services/local-storage.service";
+import { ApiService } from "../../services/api.service";
 
 @Component({
   selector: "app-login",
@@ -47,8 +48,41 @@ export class LoginComponent {
   router = inject(Router);
   _liveAnnouncer = inject(LiveAnnouncer);
   authService = inject(AuthService);
+  apiService = inject(ApiService);
   strongPasswordRegx = /^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{8,}$/;
   hide: boolean = true;
+  data: any = {
+    "data": {
+      "id": 1,
+      "companyMaster": {
+        "id": 1,
+        "name": "UTCL",
+        "address": "ASDF",
+        "domain": "@bilra",
+        "phone": "9876543210"
+      },
+      "regions": [
+        "Pune"
+      ],
+      "roleMasters": [
+        {
+          "id": 1,
+          "roleTypes": [],
+          "name": "Super",
+          "userModel": null
+        }
+      ],
+      "email": "pandagalee@gmail.com",
+      "password": null,
+      "firstName": "Lakshit",
+      "lastName": "Pandagale",
+      "phone": "9284244855",
+      "agreementId": null,
+      "active": false,
+      "approved": false
+    },
+    "message": "Successfully logged in UserModel"
+  }
   loginForm = new FormGroup({
     email: new FormControl("", [Validators.required, Validators.email]),
     password: new FormControl("", [
@@ -56,36 +90,37 @@ export class LoginComponent {
       Validators.pattern(this.strongPasswordRegx),
     ]),
   });
-constructor(private localStorageService: LocalStorageService){
- this.authService.isLoggedIn().subscribe(value =>{
-  if(value){
+  constructor(private localStorageService: LocalStorageService) {
+    this.authService.isLoggedIn().subscribe(value => {
+      if (value) {
+
+      }
+    })
 
   }
- })
 
-}
 
-  
   get f() {
     return this.loginForm.controls;
   }
-  onSubmit() {   
+  onSubmit() {
 
-  if (this.loginForm.valid) {
-    alert("Form Submitted succesfully!!!");
-   let email = this.loginForm.controls['email'].value;
-   let password = this.loginForm.controls['password'].value;
+    if (this.loginForm.valid) {
+      let res = this.data;
+      //this.apiService.userLogin(this.loginForm.value).subscribe((res: any) => {
+        if (res.message === 'Successfully logged in UserModel') {
+          let isLoggedIn = true;
+          let userData = res?.data;
+          this.localStorageService.setItem('loggedInUser', {userData, isLoggedIn});
+          this.authService.login(isLoggedIn);
+          this.router.navigate(['/role-type']);
+        } else {
+          this.router.navigate(['/login']);
+        }
+     // })
 
-    this.authService.login(email, password).subscribe((loggedIn:any) => {
-      if (loggedIn) {  
-        this.localStorageService.setItem('loggedInUser', { email, password, isLoggedIn: true });     
-        this.router.navigate(['/role-type']);
-      } else {
-        this.router.navigate(['/login']);
-      }
-    });
-  } else {
-    this.loginForm.markAllAsTouched();
+    } else {
+      this.loginForm.markAllAsTouched();
+    }
   }
-}
 }
