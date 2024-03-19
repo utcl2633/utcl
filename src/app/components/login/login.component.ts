@@ -51,38 +51,7 @@ export class LoginComponent {
   apiService = inject(ApiService);
   strongPasswordRegx = /^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{8,}$/;
   hide: boolean = true;
-  data: any = {
-    "data": {
-      "id": 1,
-      "companyMaster": {
-        "id": 1,
-        "name": "UTCL",
-        "address": "ASDF",
-        "domain": "@bilra",
-        "phone": "9876543210"
-      },
-      "regions": [
-        "Pune"
-      ],
-      "roleMasters": [
-        {
-          "id": 1,
-          "roleTypes": [],
-          "name": "Super",
-          "userModel": null
-        }
-      ],
-      "email": "pandagalee@gmail.com",
-      "password": null,
-      "firstName": "Lakshit",
-      "lastName": "Pandagale",
-      "phone": "9284244855",
-      "agreementId": null,
-      "active": false,
-      "approved": false
-    },
-    "message": "Successfully logged in UserModel"
-  }
+
   loginForm = new FormGroup({
     email: new FormControl("", [Validators.required, Validators.email]),
     password: new FormControl("", [
@@ -106,18 +75,18 @@ export class LoginComponent {
   onSubmit() {
 
     if (this.loginForm.valid) {
-      let res = this.data;
-      //this.apiService.userLogin(this.loginForm.value).subscribe((res: any) => {
+      //let res = this.data;
+      this.apiService.userLogin(this.loginForm.value).subscribe((res: any) => {
         if (res.message === 'Successfully logged in UserModel') {
           let isLoggedIn = true;
           let userData = res?.data;
-          this.localStorageService.setItem('loggedInUser', {userData, isLoggedIn});
+          this.localStorageService.setItem('loggedInUser', { userData, isLoggedIn });
           this.authService.login(isLoggedIn);
           this.router.navigate(['/role-type']);
         } else {
           this.router.navigate(['/login']);
         }
-     // })
+      })
 
     } else {
       this.loginForm.markAllAsTouched();
