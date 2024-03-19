@@ -104,7 +104,7 @@ export class RoleTypeComponent {
       });
     }
   
-    deleteRoleType(event:any,id: any) {
+    deleteRoleType(event:any,id: number) {
       this.confirmationService.confirm({
         target: event.target as EventTarget,
         message: "Do you want to delete this record?",
@@ -122,7 +122,8 @@ export class RoleTypeComponent {
             this.getData();
             this.spinner.hide();
           }, (error) => {
-            this.apiService.showErrorWithTimeout('Something went wrong! Please try again');
+           // console.log(error.message)
+            this.apiService.showErrorWithTimeout(error?.error?.message);
             this.spinner.hide();
           });
         },

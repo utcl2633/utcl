@@ -63,7 +63,7 @@ export class AddEditRoleMasterComponent {
     });
     try {
       if (this.data.element) {
-        this.f['roleTypeId'].setValue(this.data?.element?.['roletype']?.[0]?.['id']);
+        this.f['roleTypeId'].setValue(this.data?.element?.roletype?.['id']);
         this.f['roleName'].setValue(this.data?.element?.roleName);
       }
     } catch (error) {

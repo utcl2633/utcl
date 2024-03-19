@@ -98,7 +98,7 @@ export class ApiService {
   }
 
   deleteRoleType(id: any): Observable<any> {
-    return this.http.delete(this.baseUrl + '/deleteRoleType/${id}');
+    return this.http.delete(this.baseUrl + `/deleteRoleType/${id}`);
   }
 
   getRoleMaster(): Observable<any> {
@@ -114,6 +114,6 @@ export class ApiService {
   }
 
   deleteRoleMaster(id: any): Observable<any> {
-    return this.http.delete(this.baseUrl + '/deleteRole/${id}');
+    return this.http.delete(this.baseUrl + `/deleteRole/${id}`);
   }
 }
