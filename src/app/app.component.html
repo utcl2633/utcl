@@ -1,15 +1,19 @@
 
-<!-- <app-login></app-login> -->
-<app-dashboard></app-dashboard>
-<div class="wrapper">
-  <app-side-nav></app-side-nav>
-  <div
-    [ngClass]="{' main-div': !sideNavService.hideSideNav, 'mt-80': sideNavService.hideSideNav }"
-  >
-    <div class="row">
-      <div class="col">
-        <router-outlet></router-outlet>
+
+<app-login *ngIf="!isDashboard"></app-login>
+<div *ngIf="isDashboard">
+  <app-dashboard></app-dashboard>
+  <div class="wrapper">
+    <app-side-nav></app-side-nav>
+    <div
+      [ngClass]="{' main-div': !sideNavService.hideSideNav, 'mt-80': sideNavService.hideSideNav }"
+    >
+      <div class="row">
+        <div class="col">
+          <router-outlet></router-outlet>
+        </div>
       </div>
     </div>
   </div>
 </div>
+

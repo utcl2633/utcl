@@ -48,7 +48,8 @@
                 <mat-error>
                   Please Enter Password.
                 </mat-error>
-                } @if(f['password'].errors?.['pattern'] &&
+                } 
+                @if(f['password'].errors?.['pattern'] &&
                 f['password'].touched){
                 <mat-error>
                   Password must be minimum eight characters including one

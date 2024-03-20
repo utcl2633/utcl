@@ -15,6 +15,9 @@ import { ToastModule } from "primeng/toast";
 import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
 import { ConfirmationService } from "primeng/api";
 import { ConfirmDialogModule } from "primeng/confirmdialog";
+import { Router } from '@angular/router';
+import { AuthService } from "../../services/auth.service";
+import { LocalStorageService } from "../../services/local-storage.service";
 
 @Component({
   selector: 'app-role-type',
@@ -46,13 +49,16 @@ export class RoleTypeComponent {
     modalService = inject(NgbModal);
     spinner = inject(NgxSpinnerService);
     confirmationService = inject(ConfirmationService);
-
-  
+    router = inject(Router);  
     dataSource = new MatTableDataSource<any>();
     @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
-  
+    loggedInUser: any;
+    
+    constructor(private localStorageService: LocalStorageService) { }
     ngOnInit() {
+      this.loggedInUser = this.localStorageService.getItem('loggedInUser');
+      console.log(this.loggedInUser.isLoggedIn,"localstrogage");
       this.getData();
     }
   

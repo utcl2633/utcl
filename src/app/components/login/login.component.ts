@@ -1,5 +1,6 @@
+import { LiveAnnouncer } from "@angular/cdk/a11y";
 import { CommonModule } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {
   FormControl,
   FormGroup,
@@ -18,6 +19,10 @@ import {
   RouterModule,
   RouterOutlet,
 } from "@angular/router";
+import { AuthService } from "../../services/auth.service";
+import { LocalStorageService } from "../../services/local-storage.service";
+import { ApiService } from "../../services/api.service";
+
 @Component({
   selector: "app-login",
   standalone: true,
@@ -40,8 +45,13 @@ import {
   styleUrl: "./login.component.css",
 })
 export class LoginComponent {
+  router = inject(Router);
+  _liveAnnouncer = inject(LiveAnnouncer);
+  authService = inject(AuthService);
+  apiService = inject(ApiService);
   strongPasswordRegx = /^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{8,}$/;
   hide: boolean = true;
+
   loginForm = new FormGroup({
     email: new FormControl("", [Validators.required, Validators.email]),
     password: new FormControl("", [
@@ -49,17 +59,37 @@ export class LoginComponent {
       Validators.pattern(this.strongPasswordRegx),
     ]),
   });
+  constructor(private localStorageService: LocalStorageService) {
+    this.authService.isLoggedIn().subscribe(value => {
+      if (value) {
 
-  constructor(private router: Router) {}
+      }
+    })
+
+  }
+
+
   get f() {
     return this.loginForm.controls;
   }
   onSubmit() {
+
     if (this.loginForm.valid) {
-      alert("Form Submitted succesfully!!!");
-      console.table(this.loginForm.value);
-      this.router.navigateByUrl("/company-master");
+      //let res = this.data;
+      this.apiService.userLogin(this.loginForm.value).subscribe((res: any) => {
+        if (res.message === 'Successfully logged in UserModel') {
+          let isLoggedIn = true;
+          let userData = res?.data;
+          this.localStorageService.setItem('loggedInUser', { userData, isLoggedIn });
+          this.authService.login(isLoggedIn);
+          this.router.navigate(['/role-type']);
+        } else {
+          this.router.navigate(['/login']);
+        }
+      })
+
+    } else {
+      this.loginForm.markAllAsTouched();
     }
-    this.loginForm.reset();
   }
 }

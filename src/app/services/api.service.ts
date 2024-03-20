@@ -10,6 +10,7 @@ export class ApiService {
   private http = inject(HttpClient);
   messageService = inject(MessageService);
   confirmationService = inject(ConfirmationService);
+   public baseUrl: string = 'http://localhost:8080';
 
   showSuccessWithTimeout(message: any) {
     this.messageService.add({
@@ -55,12 +56,17 @@ export class ApiService {
     });
   }
 
+  userLogin(payload: any): Observable<any> {
+    return this.http.post(this.baseUrl + '/login', payload);
+  }
+
+
   userRegistration(payload: any): Observable<any> {
-    return this.http.post(`http://localhost:8080/addUser`, payload);
+    return this.http.post(this.baseUrl + '/addUser', payload);
   }
 
   getCompanyMaster(): Observable<any> {
-    return this.http.get("http://localhost:8080/getAllCompanyMasters");
+    return this.http.get(this.baseUrl + '/getAllCompanyMasters');
   }
 
   getListOfData(url: string): Observable<any> {
@@ -68,46 +74,46 @@ export class ApiService {
   }
 
   addCompanyMaster(payload: any): Observable<any> {
-    return this.http.post(`http://localhost:8080/addCompanyMaster`, payload);
+    return this.http.post(this.baseUrl + '/addCompanyMaster', payload);
   }
 
   updateCompanyMaster(payload: any): Observable<any> {
-    return this.http.post(`http://localhost:8080/updateCompanyMaster`, payload);
+    return this.http.post(this.baseUrl + '/updateCompanyMaster', payload);
   }
 
   deleteCompanyMaster(id: any): Observable<any> {
-    return this.http.delete(`http://localhost:8080/deleteCompanyMaster` + id);
+    return this.http.delete(this.baseUrl + '/deleteCompanyMaster' + id);
   }
 
   getRoleType(): Observable<any> {
-    return this.http.get("http://localhost:8080/getAllRoleType");
+    return this.http.get(this.baseUrl + '/getAllRoleType');
   }
 
   addRoleType(payload: any): Observable<any> {
-    return this.http.post(`http://localhost:8080/addRoleType`, payload);
+    return this.http.post(this.baseUrl + '/addRoleType', payload);
   }
 
   updateRoleType(payload: any): Observable<any> {
-    return this.http.put(`http://localhost:8080/updateRoleType`, payload);
+    return this.http.put(this.baseUrl + '/updateRoleType', payload);
   }
 
   deleteRoleType(id: any): Observable<any> {
-    return this.http.delete(`http://localhost:8080/deleteRoleType/${id}`);
+    return this.http.delete(this.baseUrl + '/deleteRoleType/${id}');
   }
 
   getRoleMaster(): Observable<any> {
-    return this.http.get("http://localhost:8080/getAllRoleMasters");
+    return this.http.get(this.baseUrl + '/getAllRoleMasters');
   }
 
   addRoleMaster(payload: any): Observable<any> {
-    return this.http.post(`http://localhost:8080/addRoles`, payload);
+    return this.http.post(this.baseUrl + '/addRoles', payload);
   }
 
   updateRoleMaster(payload: any): Observable<any> {
-    return this.http.put(`http://localhost:8080/updateRoleMaster`, payload);
+    return this.http.put(this.baseUrl + '/updateRoleMaster', payload);
   }
 
   deleteRoleMaster(id: any): Observable<any> {
-    return this.http.delete(`http://localhost:8080/deleteRole/${id}`);
+    return this.http.delete(this.baseUrl + '/deleteRole/${id}');
   }
 }
