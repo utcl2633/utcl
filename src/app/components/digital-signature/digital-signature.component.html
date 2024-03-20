@@ -1,1 +1,24 @@
-<p>digital-signature works!</p>
+<div class="row d-flex w-100">
+  <ngx-dropzone (change)="onSelect($event)" class="w-50" style="margin: auto;">
+    <ngx-dropzone-label>Drop your file here</ngx-dropzone-label>
+    @if(files) {
+    <ngx-dropzone-preview [removable]="true" (removed)="onRemove(files)">
+      <ngx-dropzone-label
+        >{{ files?.name }} ({{ files?.type }})</ngx-dropzone-label
+      >
+    </ngx-dropzone-preview>
+    }
+  </ngx-dropzone>
+  @if(files) {
+  <div class="card mt-3" style="margin: auto; width: 60%; height: 100%;">
+    <div class="card-body" style="max-height: 800px; height: 400px;">
+      <iframe
+        [src]="urlSafe"
+        title="fileUpload"
+        width="100%"
+        height="100%"
+      ></iframe>
+    </div>
+  </div>
+  }
+</div>

@@ -14,6 +14,4 @@ export const routes: Routes = [
     {path: 'role-master', component: RoleMasterComponent},
     {path: 'user-registration', component: UserRegistrationComponent},
     {path: 'digital-sign', component: DigitalSignatureComponent},
-
-    
 ];
