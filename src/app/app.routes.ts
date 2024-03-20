@@ -16,6 +16,5 @@ export const routes: Routes = [
     {path: 'user-registration', component: UserRegistrationComponent, canActivate: [AuthGuardService]},
     {path: 'digital-sign', component: DigitalSignatureComponent , canActivate: [AuthGuardService]},
     { path: '**', redirectTo: 'role-type' },
-
     
 ];
