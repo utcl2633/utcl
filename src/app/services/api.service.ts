@@ -116,4 +116,33 @@ export class ApiService {
   deleteRoleMaster(id: any): Observable<any> {
     return this.http.delete(this.baseUrl + `/deleteRole/${id}`);
   }
+
+  uploadPdfWithStamp = ( formData:any) => {
+    //signText
+   // const formData  = new FormData();
+    var url = this.baseUrl + '/signText';
+    const response =  fetch(url, {
+      method: 'POST',
+      body: formData
+    }).then(response =>
+      response.blob()
+  )
+   return response;
+    
+}
+
+uploadPdfWithSignature = ( formData:any) => {
+  //signText
+ // const formData  = new FormData();
+  var url = this.baseUrl + '/signature';
+  const response =  fetch(url, {
+    method: 'POST',
+    body: formData
+  }).then(response =>
+    response.blob()
+)
+ return response;
+  
+}
+
 }

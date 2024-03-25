@@ -1,23 +1,31 @@
 <div class="row d-flex w-100">
-  <ngx-dropzone (change)="onSelect($event)" class="w-50" style="margin: auto;">
+  <div class="card mt-3" style="margin: auto; width: 60%; height: 100%; margin-bottom: 20px;">
+    <div class="card-body" style="max-height: 800px;">
+      <label id="example-radio-group-label"><b>Pick your favorite Signature Type: </b></label>
+      <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="signOpt">
+        @for (sgn of signaturesOpts; track sgn) {
+        <mat-radio-button class="example-radio-button" [value]="sgn">{{sgn}}</mat-radio-button>
+        }
+      </mat-radio-group>
+    </div>
+  </div>
+
+
+
+  <ngx-dropzone [multiple]="false" [accept]="accept" (change)="onSelect($event)" class="w-50"
+    style="margin: auto;justify-content: center !important;align-items: center !important;">
     <ngx-dropzone-label>Drop your file here</ngx-dropzone-label>
     @if(files) {
     <ngx-dropzone-preview [removable]="true" (removed)="onRemove(files)">
-      <ngx-dropzone-label
-        >{{ files?.name }} ({{ files?.type }})</ngx-dropzone-label
-      >
+      <ngx-dropzone-label>{{ files?.name }} ({{ files?.type }})</ngx-dropzone-label>
     </ngx-dropzone-preview>
     }
   </ngx-dropzone>
   @if(files) {
   <div class="card mt-3" style="margin: auto; width: 60%; height: 100%;">
     <div class="card-body" style="max-height: 800px; height: 400px;">
-      <iframe
-        [src]="urlSafe"
-        title="fileUpload"
-        width="100%"
-        height="100%"
-      ></iframe>
+      <iframe [src]="urlSafe" title="fileUpload" width="100%" height="100%"
+        onload="this.contentWindow.document.documentElement.scrollTop=100"></iframe>
     </div>
   </div>
   }
