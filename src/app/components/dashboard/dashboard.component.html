@@ -1,8 +1,12 @@
 <nav class="navbar navbar-dark bg-color w-100 sticky">
   <app-header></app-header>
-  <img
+    <img [matMenuTriggerFor]="belowMenu"
     src="https://www.w3schools.com/howto/img_avatar.png"
     class="profile"
     alt="img"
   />
+<mat-menu #belowMenu="matMenu" yPosition="below">
+  <button mat-menu-item (click)="logout()"> <mat-icon>power_settings_new</mat-icon><span>Logout</span></button>
+</mat-menu>
+
 </nav>
